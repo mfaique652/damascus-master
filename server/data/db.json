@@ -125,7 +125,7 @@
       "memberSince": 2025,
       "createdAt": "2025-08-17T05:57:12.065Z",
       "updatedAt": "2025-08-23T20:02:22.492Z",
-      "lastLogin": "2025-08-23T19:49:33.118Z",
+      "lastLogin": "2025-08-23T21:03:28.613Z",
       "knownIps": [
         "127.0.0.1"
       ]
@@ -575,9 +575,11 @@
       "position": 2,
       "createdAt": 1755373696118,
       "topSeller": false,
-      "updatedAt": 1755982687096,
+      "updatedAt": 1755983008832,
       "sale": {
-        "active": false
+        "active": true,
+        "price": 150,
+        "prevPrice": 180
       },
       "price": 250
     },
