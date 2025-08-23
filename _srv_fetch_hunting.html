@@ -1,11 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="description" content="— Warranty: Manufacturer's 90 Day
+— 9&quot; 4340 + 1095 Damascus Steel Blade
+— Bird's Eye Pattern
+— 5&quot; Olive &amp; Rose Wood Handle">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <title>Kitchen Hunter - Product</title>
+  <title>hn1 - HUNTING BOWIE KNIFE Gift for men | Damascus Master</title>
   <link rel="stylesheet" href="css/theme.css">
   <style>
     html { font-size: 16px; }
@@ -24,6 +28,13 @@
   .nav-arrow.right { right: 0.6rem; }
     .main-img-wrap:hover { box-shadow: 0 12px 32px rgba(3,102,214,0.06); transform: translateY(-2px); }
     .album-main-img { width: 100%; max-width: 100%; height: auto; border-radius: 0.75rem; box-shadow: 0 6px 20px rgba(16,24,40,0.06); display: block; object-fit: contain; background: #ffffff; }
+  /* Sale ribbon (product-card style: diagonal corner badge) */
+  .sale-ribbon { position:absolute; top:12px; left:-42px; transform:rotate(-45deg); width:160px; padding:6px 0; background: linear-gradient(90deg,#ff5a5a,#ff8a5a); color:#fff; font-weight:800; font-size:0.9rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.38); z-index:12; display:none; }
+  .sale-ribbon .sale-pct { display:inline-block; width:100%; color:#fff; }
+  /* keep the hidden price span for accessibility, but style it so JS can toggle visibility
+    The ribbon container remains display:none by default; when JS shows the ribbon the price
+    inside should be visible and readable. */
+  .sale-ribbon .sale-price { display:inline-block; font-weight:800; margin-left:0.4rem; background: rgba(255,255,255,0.12); padding:0.08rem 0.45rem; border-radius:0.3rem; color:#fff; }
     .magnifier-lens { position: absolute; border: 2px solid rgba(0,0,0,0.06); border-radius: 50%; width: 7.5rem; height: 7.5rem; pointer-events: none; display: none; box-shadow: 0 6px 18px rgba(16,24,40,0.06); z-index: 2; }
   .album-thumbs { display: flex; gap: 0.5rem; margin-top: 1rem; justify-content: center; flex-wrap: wrap; z-index: 3; }
     .album-thumb { width: 3.75rem; height: 3.75rem; object-fit: cover; border-radius: 0.5rem; cursor: pointer; border: 1px solid transparent; transition: border 0.15s, transform 0.12s; background: #fafafa; }
@@ -74,28 +85,36 @@
     <a href="#" class="back-link" onclick="handleBack(event)">&larr; Back</a>
     <div class="back-link-space"></div>
     <div class="main-img-wrap">
-      <div class="wishlist-heart" data-wishlist-productid="d93e8ccf-28a4-4c6e-bf2b-ec402fe42741" data-wishlist-id="kn2" data-wishlist-title="Kitchen Hunter" data-wishlist-desc="" data-wishlist-price="120" data-wishlist-img="uploads/1755803571570-Cigar.png" data-wishlist-album="kitchen_hunter.html"null' title="Wishlist" style="position:absolute;right:0.5rem;top:0.5rem;z-index:3;">
+  <div id="saleRibbon" class="sale-ribbon" style="display:inline-block;visibility:hidden;opacity:0;"><span id="saleRibbonPct" class="sale-pct"></span><span class="sale-price" id="saleRibbonPrice" style="display:inline-block;"></span></div>
+    <div class="wishlist-heart" data-wishlist-productid="8b17d2d1-112c-4c33-bea4-c2b4ca9247cd" data-wishlist-id="hn1" data-wishlist-title="HUNTING BOWIE KNIFE Gift for men" data-wishlist-desc="— Warranty: Manufacturer&#39;s 90 Day
+— 9&quot; 4340 + 1095 Damascus Steel Blade
+— Bird&#39;s Eye Pattern
+— 5&quot; Olive &amp; Rose Wood Handle" data-wishlist-price="180" data-wishlist-img="uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp" data-wishlist-album="hunting_bowie_knife_gift_for_men.html" title="Wishlist" style="position:absolute;right:0.5rem;top:0.5rem;z-index:3;">
         <svg width="28" height="28" viewBox="0 0 24 24" stroke="#ff4d6d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M12 21s-6.5-4.35-9-7.5C1.5 10.5 2.5 7 6 7c2.1 0 3.5 1.5 4 2.5C10.5 8.5 11.9 7 14 7c3.5 0 4.5 3.5 3 6.5-2.5 3.15-9 7.5-9 7.5z"/></svg>
       </div>
   <button id="arrowLeft" class="nav-arrow left" aria-label="Previous image">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4fc3f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <img id="mainImg" src="uploads/1755803571570-Cigar.png" alt="Kitchen Hunter" class="album-main-img">
+      <img id="mainImg" src="uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp" alt="HUNTING BOWIE KNIFE Gift for men" class="album-main-img">
   <button id="arrowRight" class="nav-arrow right" aria-label="Next image">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4fc3f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <div id="magnifierLens" class="magnifier-lens"></div>
     </div>
-    <div id="albumThumbs" class="album-thumbs"><img class='album-thumb selected' src='uploads/1755803571570-Cigar.png' data-img='uploads/1755803571570-Cigar.png' alt='Kitchen Hunter'>
-        <img class='album-thumb' src='uploads/1755803571622-custom.png' data-img='uploads/1755803571622-custom.png' alt='Kitchen Hunter'>
-        <img class='album-thumb' src='uploads/1755803571646-cutter.jpg' data-img='uploads/1755803571646-cutter.jpg' alt='Kitchen Hunter'>
-        <img class='album-thumb' src='uploads/1755803571646-cutter.png' data-img='uploads/1755803571646-cutter.png' alt='Kitchen Hunter'></div>
+    <div id="albumThumbs" class="album-thumbs"><img class='album-thumb selected' src='uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp' data-img='uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp' alt='HUNTING BOWIE KNIFE Gift for men'>
+        <img class='album-thumb' src='uploads/1755373694651-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__1_.webp' data-img='uploads/1755373694651-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__1_.webp' alt='HUNTING BOWIE KNIFE Gift for men'>
+        <img class='album-thumb' src='uploads/1755373694656-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar.webp' data-img='uploads/1755373694656-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar.webp' alt='HUNTING BOWIE KNIFE Gift for men'></div>
   </div>
 
   <div class="album-info">
-    <div class="album-title">Kitchen Hunter</div>
-    <div class="album-desc"></div>
-    <div class="album-details" style="margin-top:0.5rem"></div>
+    <div class="album-title">HUNTING BOWIE KNIFE Gift for men</div>
+    <div class="album-desc">— Warranty: Manufacturer&#39;s 90 Day
+— 9&quot; 4340 + 1095 Damascus Steel Blade
+— Bird&#39;s Eye Pattern
+— 5&quot; Olive &amp; Rose Wood Handle</div>
+    <div class="album-details" style="margin-top:0.5rem">Color Brown
+Materials Damascus Steel
+Measurements 14"L x 2"W x 0.75"H</div>
 
     <div class="quantity-row">
       <label class="quantity-label">Quantity:</label>
@@ -105,9 +124,9 @@
 
     <div class="price-row">
       <div style="font-weight:600;color:#ffb347;">Price per item:</div>
-      <div id="unitPrice">$120</div>
+  <div id="unitPrice"><span class="orig-price" style="text-decoration:line-through;color:#9aa3af;margin-right:0.6rem">$180.00</span><span class="sale-price" style="background:#fff;color:#000;padding:0.2em 0.6em;border-radius:0.4em;font-weight:800">$150.00</span></div>
       <div style="font-weight:600;color:#4fc3f7;margin-left:1rem;">Total:</div>
-      <div id="totalPrice" style="font-weight:700">$120</div>
+  <div id="totalPrice" style="font-weight:700">$150.00</div>
     </div>
 
     <div style="margin-top:1rem">
@@ -149,21 +168,21 @@
   // Use JSON.parse on the JSON string literals produced by the generator so
   // we never introduce raw backticks or single-quoted HTML into the inline script.
   window.__ALBUM_PLACEHOLDERS = {
-    title: (function(){ try{ return JSON.parse("Kitchen Hunter" && JSON.stringify("Kitchen Hunter")); }catch(e){ return "Kitchen Hunter"; } })(),
-    desc: (function(){ try{ return JSON.parse("" && JSON.stringify("")); }catch(e){ return ""; } })(),
-    price: (function(){ try{ return JSON.parse("120" && JSON.stringify("120")); }catch(e){ return "120"; } })(),
-    mainImage: (function(){ try{ return JSON.parse("uploads/1755803571570-Cigar.png" && JSON.stringify("uploads/1755803571570-Cigar.png")); }catch(e){ return "uploads/1755803571570-Cigar.png"; } })(),
-  imagesHtml: (function(){ try{ return "<img class='album-thumb selected' src='uploads/1755803571570-Cigar.png' data-img='uploads/1755803571570-Cigar.png' alt='Kitchen Hunter'>\n        <img class='album-thumb' src='uploads/1755803571622-custom.png' data-img='uploads/1755803571622-custom.png' alt='Kitchen Hunter'>\n        <img class='album-thumb' src='uploads/1755803571646-cutter.jpg' data-img='uploads/1755803571646-cutter.jpg' alt='Kitchen Hunter'>\n        <img class='album-thumb' src='uploads/1755803571646-cutter.png' data-img='uploads/1755803571646-cutter.png' alt='Kitchen Hunter'>"; }catch(e){ return ''; } })(),
-    heartId: (function(){ try{ return JSON.parse("kn2" && JSON.stringify("kn2")); }catch(e){ return "kn2"; } })(),
-    detailsJson: (function(){ try{ return {}; }catch(e){ return {}; } })(),
-    albumFilename: (function(){ try{ return JSON.parse("kitchen_hunter.html" && JSON.stringify("kitchen_hunter.html")); }catch(e){ return "kitchen_hunter.html"; } })(),
-    productId: (function(){ try{ return JSON.parse("d93e8ccf-28a4-4c6e-bf2b-ec402fe42741" && JSON.stringify("d93e8ccf-28a4-4c6e-bf2b-ec402fe42741")); }catch(e){ return "d93e8ccf-28a4-4c6e-bf2b-ec402fe42741"; } })(),
-    // Sale JSON: either null or an object { active, price, prevPrice }
-    sale: (function(){ try{ return null; }catch(e){ return null; } })(),
-    reviewsApi: (function(){ try{ return JSON.parse("/api/products/d93e8ccf-28a4-4c6e-bf2b-ec402fe42741/reviews" && JSON.stringify("/api/products/d93e8ccf-28a4-4c6e-bf2b-ec402fe42741/reviews")); }catch(e){ return (window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : ''); } })()
+    title: (function(){ try{ return JSON.parse('"HUNTING BOWIE KNIFE Gift for men"'); }catch(e){ return '"HUNTING BOWIE KNIFE Gift for men"'; } })(),
+    desc: (function(){ try{ return JSON.parse('"— Warranty: Manufacturer's 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird's Eye Pattern\n— 5\" Olive & Rose Wood Handle"'); }catch(e){ try{ return '"— Warranty: Manufacturer's 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird's Eye Pattern\n— 5\" Olive & Rose Wood Handle"'; }catch(e2){ return ''; } } })(),
+    price: (function(){ try{ return JSON.parse('"180"'); }catch(e){ return '"180"'; } })(),
+    mainImage: (function(){ try{ return JSON.parse('"uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp"'); }catch(e){ return '"uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp"'; } })(),
+  imagesHtml: (function(){ try{ return "<img class='album-thumb selected' src='uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp' data-img='uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp' alt='HUNTING BOWIE KNIFE Gift for men'>\n        <img class='album-thumb' src='uploads/1755373694651-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__1_.webp' data-img='uploads/1755373694651-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__1_.webp' alt='HUNTING BOWIE KNIFE Gift for men'>\n        <img class='album-thumb' src='uploads/1755373694656-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar.webp' data-img='uploads/1755373694656-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar.webp' alt='HUNTING BOWIE KNIFE Gift for men'>"; }catch(e){ return ''; } })(),
+    heartId: (function(){ try{ return JSON.parse('"hn1"'); }catch(e){ return '"hn1"'; } })(),
+    detailsJson: (function(){ try{ return JSON.parse('{"0":"C","1":"o","2":"l","3":"o","4":"r","5":" ","6":"B","7":"r","8":"o","9":"w","10":"n","11":"\n","12":"M","13":"a","14":"t","15":"e","16":"r","17":"i","18":"a","19":"l","20":"s","21":" ","22":"D","23":"a","24":"m","25":"a","26":"s","27":"c","28":"u","29":"s","30":" ","31":"S","32":"t","33":"e","34":"e","35":"l","36":"\n","37":"M","38":"e","39":"a","40":"s","41":"u","42":"r","43":"e","44":"m","45":"e","46":"n","47":"t","48":"s","49":" ","50":"1","51":"4","52":"\"","53":"L","54":" ","55":"x","56":" ","57":"2","58":"\"","59":"W","60":" ","61":"x","62":" ","63":"0","64":".","65":"7","66":"5","67":"\"","68":"H","displayId":"hn1"}'); }catch(e){ return {}; } })(),
+    albumFilename: (function(){ try{ return JSON.parse('"hunting_bowie_knife_gift_for_men.html"'); }catch(e){ return '"hunting_bowie_knife_gift_for_men.html"'; } })(),
+    productId: (function(){ try{ return JSON.parse('"8b17d2d1-112c-4c33-bea4-c2b4ca9247cd"'); }catch(e){ return '"8b17d2d1-112c-4c33-bea4-c2b4ca9247cd"'; } })(),
+  // Sale JSON: either null or an object { active, price, prevPrice }
+  // Generator will replace {"active":true,"price":150,"prevPrice":180} with raw JSON (no surrounding quotes).
+  sale: (function(){ try{ return JSON.parse('{"active":true,"price":150,"prevPrice":180}'); }catch(e){ return null; } })(),
+    reviewsApi: (function(){ try{ return JSON.parse('"/api/products/8b17d2d1-112c-4c33-bea4-c2b4ca9247cd/reviews"'); }catch(e){ return (window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : ''); } })()
   }
   </script>
-
   <!-- Shared runtime for album pages (extracted from inline template) -->
   <script src="scripts/album-runtime.js"></script>
 <script src="site.js"></script>
@@ -199,7 +218,23 @@
 
   // Add to catalogue
   const addBtn = document.getElementById('addToCatalogue');
-  if(addBtn){ addBtn.addEventListener('click', function(){ try{ const galleryImages = Array.from(document.querySelectorAll('.album-thumb')).map(t=>t.dataset.img || t.src); const selectedThumb = document.querySelector('.album-thumb.selected'); const mainImage = selectedThumb ? (selectedThumb.dataset.img || selectedThumb.src) : (document.getElementById('mainImg') && document.getElementById('mainImg').src) || ''; const qty = Math.max(1, parseInt(document.getElementById('qtySlider')?.value||'1',10)); const title = document.querySelector('.album-title')?.textContent.trim()||''; const desc = document.querySelector('.album-desc')?.textContent.trim()||''; const unit = parseUnitPrice(); const heartEl = document.querySelector('.wishlist-heart'); const id = heartEl ? (heartEl.dataset.wishlistId || heartEl.dataset.id || ('p-'+Math.random().toString(36).slice(2,9))) : ('p-'+Math.random().toString(36).slice(2,9)); let details=null; try{ details = JSON.parse(document.querySelector('.album-details')?.textContent || null); }catch(e){ details = document.querySelector('.album-details')?.textContent || null; } const product = { id, title, name:title, desc, price: unit, img: mainImage, mainImage, images: galleryImages, album: 'kitchen_hunter.html' || window.location.pathname.split('/').pop(), details, quantity: qty }; let catalogue = []; try{ catalogue = JSON.parse(localStorage.getItem('catalogue')||'[]'); }catch(e){ catalogue = []; } const idx = catalogue.findIndex(it=>it.id===product.id || (it.title && it.title===product.title)); if(idx!==-1){ catalogue[idx].quantity = (Number(catalogue[idx].quantity||0)+Number(product.quantity||1)); catalogue[idx].price = product.price; } else catalogue.push(product); localStorage.setItem('catalogue', JSON.stringify(catalogue)); const toast = document.createElement('div'); toast.textContent = idx!==-1 ? 'Updated quantity in catalogue' : 'Added to catalogue'; toast.style.position='fixed'; toast.style.bottom='18px'; toast.style.right='18px'; toast.style.background='#23262f'; toast.style.color='#fff'; toast.style.padding='10px 14px'; toast.style.borderRadius='8px'; toast.style.zIndex=99999; toast.style.boxShadow='0 8px 24px rgba(0,0,0,0.18)'; document.body.appendChild(toast); setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend', ()=> toast.remove()); }, 1600); setTimeout(()=>{ try{ toast.remove(); }catch(e){} }, 3000);
+  if(addBtn){ addBtn.addEventListener('click', function(){ try{ const galleryImages = Array.from(document.querySelectorAll('.album-thumb')).map(t=>t.dataset.img || t.src); const selectedThumb = document.querySelector('.album-thumb.selected'); const mainImage = selectedThumb ? (selectedThumb.dataset.img || selectedThumb.src) : (document.getElementById('mainImg') && document.getElementById('mainImg').src) || ''; const qty = Math.max(1, parseInt(document.getElementById('qtySlider')?.value||'1',10)); const title = document.querySelector('.album-title')?.textContent.trim()||''; const desc = document.querySelector('.album-desc')?.textContent.trim()||''; const unit = parseUnitPrice(); const heartEl = document.querySelector('.wishlist-heart'); const id = heartEl ? (heartEl.dataset.wishlistId || heartEl.dataset.id || ('p-'+Math.random().toString(36).slice(2,9))) : ('p-'+Math.random().toString(36).slice(2,9)); let details=null; try{ details = JSON.parse(document.querySelector('.album-details')?.textContent || null); }catch(e){ details = document.querySelector('.album-details')?.textContent || null; }
+    // Extract sale metadata from dataset (heart) or placeholder so we can persist it
+    let _sale = null;
+    try { if (heartEl && heartEl.dataset && heartEl.dataset.wishlistSale) { _sale = JSON.parse(heartEl.dataset.wishlistSale); } } catch(e){ _sale = null; }
+    if((!_sale || !_sale.active) && typeof window !== 'undefined' && window.__ALBUM_PLACEHOLDERS && window.__ALBUM_PLACEHOLDERS.sale){ _sale = window.__ALBUM_PLACEHOLDERS.sale; }
+
+    const product = { id, title, name:title, desc, price: unit, img: mainImage, images: galleryImages, album: 'hunting_bowie_knife_gift_for_men.html' || window.location.pathname.split('/').pop(), details, quantity: qty, sale: _sale };
+    let catalogue = [];
+    try{ catalogue = JSON.parse(localStorage.getItem('catalogue')||'[]'); }catch(e){ catalogue = []; }
+    const idx = catalogue.findIndex(it=>it.id===product.id || (it.title && it.title===product.title));
+    if(idx!==-1){
+      catalogue[idx].quantity = (Number(catalogue[idx].quantity||0)+Number(product.quantity||1));
+      catalogue[idx].price = product.price;
+      catalogue[idx].sale = product.sale || catalogue[idx].sale || null;
+    } else catalogue.push(product);
+    localStorage.setItem('catalogue', JSON.stringify(catalogue));
+    const toast = document.createElement('div'); toast.textContent = idx!==-1 ? 'Updated quantity in catalogue' : 'Added to catalogue'; toast.style.position='fixed'; toast.style.bottom='18px'; toast.style.right='18px'; toast.style.background='#23262f'; toast.style.color='#fff'; toast.style.padding='10px 14px'; toast.style.borderRadius='8px'; toast.style.zIndex=99999; toast.style.boxShadow='0 8px 24px rgba(0,0,0,0.18)'; document.body.appendChild(toast); setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend', ()=> toast.remove()); }, 1600); setTimeout(()=>{ try{ toast.remove(); }catch(e){} }, 3000);
   }catch(e){ console.error('Add failed',e); } }); }
 
   // Reviews client + star UI
@@ -241,5 +276,6 @@
 
 </body>
 </html>
+
 
 
