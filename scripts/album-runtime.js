@@ -71,8 +71,15 @@
                 if (ribbonPct) { ribbonPct.textContent = pctText; try{ ribbonPct.style.display = 'inline-block'; ribbonPct.style.visibility = 'visible'; ribbonPct.style.opacity = '1'; }catch(e){} }
                 // keep price span updated for accessibility if present
                 if (ribbonPrice) { ribbonPrice.textContent = '$' + sp.toFixed(2); try{ ribbonPrice.style.display = 'inline-block'; ribbonPrice.style.visibility = 'visible'; ribbonPrice.style.opacity = '1'; ribbonPrice.setAttribute('style', (ribbonPrice.getAttribute('style')||'') + ';display:inline-block !important;visibility:visible;opacity:1'); }catch(e){} }
-                // ensure ribbon is visible (matches product-card diagonal badge) - use visibility/opacity so external CSS that sets display:none doesn't permanently remove it
-                try{ ribbon.style.display = 'inline-block'; ribbon.style.visibility = 'visible'; ribbon.style.opacity = '1'; }catch(e){}
+                   // ensure ribbon is visible (matches product-card diagonal badge) - use setProperty with priority so external CSS rules are less likely to hide it
+                   try{
+                     // prefer using CSSOM setProperty with 'important' to override stylesheet rules when safe
+                     try{ ribbon.style.setProperty('display','inline-block','important'); }catch(e){ ribbon.style.display = 'inline-block'; }
+                     try{ ribbon.style.setProperty('visibility','visible','important'); }catch(e){ ribbon.style.visibility = 'visible'; }
+                     try{ ribbon.style.setProperty('opacity','1','important'); }catch(e){ ribbon.style.opacity = '1'; }
+                     // raise z-index in case parent stacking or overlays clip the badge
+                     try{ ribbon.style.setProperty('z-index','9999','important'); }catch(e){ ribbon.style.zIndex = '9999'; }
+                   }catch(e){}
               }catch(err){ try{ if (ribbon) ribbon.style.display = ''; }catch(e){} }
             }
           }catch(e){}
@@ -208,4 +215,31 @@
     // Keep quantity wiring
     const qtyEl = document.getElementById('qtySlider'); if (qtyEl) { qtyEl.addEventListener('input', renderTotal); qtyEl.addEventListener('change', renderTotal); }
   }catch(e){ console.warn('album-runtime failed', e); }
+})();
+
+// Self-healing guard: if another script later hides the sale ribbon, re-apply visible styles
+(function(){
+  try{
+    var ribbon = document.getElementById && document.getElementById('saleRibbon');
+    if (!ribbon) return;
+    function ensureVisible(){
+      try{
+        // if computed style indicates hidden, force it back
+        var cs = window.getComputedStyle && window.getComputedStyle(ribbon);
+        if (cs && (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0)){
+          try{ ribbon.style.setProperty('display','inline-block','important'); }catch(e){ ribbon.style.display = 'inline-block'; }
+          try{ ribbon.style.setProperty('visibility','visible','important'); }catch(e){ ribbon.style.visibility = 'visible'; }
+          try{ ribbon.style.setProperty('opacity','1','important'); }catch(e){ ribbon.style.opacity = '1'; }
+          try{ ribbon.style.setProperty('z-index','9999','important'); }catch(e){ ribbon.style.zIndex = '9999'; }
+        }
+      }catch(e){}
+    }
+    // run periodically for a short window after page load to catch late scripts
+    var attempts = 0; var maxAttempts = 40; var iv = setInterval(function(){ try{ ensureVisible(); attempts++; if (attempts>maxAttempts) clearInterval(iv); }catch(e){ clearInterval(iv); } }, 150);
+    // also observe attribute changes and re-apply immediately
+    try{
+      var mo2 = new MutationObserver(function(muts){ try{ ensureVisible(); }catch(e){} });
+      mo2.observe(ribbon, { attributes: true, attributeFilter: ['style','class'] });
+    }catch(e){}
+  }catch(e){}
 })();

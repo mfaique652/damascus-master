@@ -24,11 +24,11 @@
   .nav-arrow.right { right: 0.6rem; }
     .main-img-wrap:hover { box-shadow: 0 12px 32px rgba(3,102,214,0.06); transform: translateY(-2px); }
     .album-main-img { width: 100%; max-width: 100%; height: auto; border-radius: 0.75rem; box-shadow: 0 6px 20px rgba(16,24,40,0.06); display: block; object-fit: contain; background: #ffffff; }
-  /* Sale ribbon (product-card style: diagonal corner badge)
-    Keep the ribbon element in-layout by default but hidden via
-    visibility/opacity so JS can reveal it. Avoid display:none so
-    runtime toggles are not overridden by stylesheet rules. */
-  .sale-ribbon { position:absolute; top:12px; left:-42px; transform:rotate(-45deg); width:160px; padding:6px 0; background: linear-gradient(90deg,#ff5a5a,#ff8a5a); color:#fff; font-weight:800; font-size:0.9rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.38); z-index:12; display:inline-block; visibility:hidden; opacity:0; transition:opacity 150ms ease, visibility 150ms ease; }
+  /* Sale ribbon (product-card style: corner badge)
+    Default: keep in-layout but visually hidden (opacity:0). Use inside-card
+    positioning (0.6rem) to avoid being clipped by overflow:hidden parents.
+    JS will set opacity/visibility and z-index when showing the ribbon. */
+  .sale-ribbon { position:absolute; top:0.6rem; left:0.6rem; transform:none; min-width:48px; padding:6px 8px; background: linear-gradient(90deg,#ff5a5a,#ff8a5a); color:#fff; font-weight:800; font-size:0.9rem; text-align:center; border-radius:0.45rem; box-shadow:0 2px 8px rgba(0,0,0,0.28); z-index:12; display:inline-block !important; visibility:visible !important; opacity:0; transition:opacity 150ms ease, visibility 150ms ease; }
   .sale-ribbon .sale-pct { display:inline-block; width:100%; color:#fff; }
   /* keep the hidden price span for accessibility, but style it so JS can toggle visibility
     The ribbon container remains display:none by default; when JS shows the ribbon the price
@@ -177,6 +177,24 @@
 <script src="site.js"></script>
 
 <script>
+  // Diagnostic observer: log attribute/style changes to #saleRibbon so we can detect later scripts hiding it
+  (function(){ try{
+    var el = document.getElementById && document.getElementById('saleRibbon');
+    if (!el) return;
+    window.__saleRibbonDiag = { lastMutation: null, log: [] };
+    var mo = new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        try{
+          var info = { time: Date.now(), type: m.type, attributeName: m.attributeName, oldValue: m.oldValue, newValue: el.getAttribute(m.attributeName) };
+          window.__saleRibbonDiag.lastMutation = info;
+          window.__saleRibbonDiag.log.push(info);
+          try{ console.log('SALE_RIBBON_MUTATION', info); }catch(e){}
+        }catch(e){}
+      });
+    });
+    mo.observe(el, { attributes: true, attributeOldValue: true, attributeFilter: ['style','class'] });
+  }catch(e){} })();
+
 /* Small helper utilities and event wiring for gallery, magnifier, quantity, reviews and add-to-catalogue.
    This file intentionally keeps behaviour inline so static generator can emit it into build output. */
 (function(){
