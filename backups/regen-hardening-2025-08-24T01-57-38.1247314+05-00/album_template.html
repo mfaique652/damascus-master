@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <title>HUNTING BOWIE KNIFE Gift for men - Product</title>
+  <title>{{TITLE}} - Product</title>
   <link rel="stylesheet" href="css/theme.css">
   <style>
     html { font-size: 16px; }
@@ -78,33 +78,25 @@
     <div class="back-link-space"></div>
     <div class="main-img-wrap">
   <div id="saleRibbon" class="sale-ribbon"><span id="saleRibbonPct" class="sale-pct"></span><span class="sale-price" id="saleRibbonPrice"></span></div>
-    <div class="wishlist-heart" data-wishlist-productid="8b17d2d1-112c-4c33-bea4-c2b4ca9247cd" data-wishlist-id="hn1" data-wishlist-title="HUNTING BOWIE KNIFE Gift for men" data-wishlist-desc="— Warranty: Manufacturer&#39;s 90 Day
-— 9&quot; 4340 + 1095 Damascus Steel Blade
-— Bird&#39;s Eye Pattern
-— 5&quot; Olive &amp; Rose Wood Handle" data-wishlist-price="250" data-wishlist-img="uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp" data-wishlist-album="hunting_bowie_knife_gift_for_men.html" title="Wishlist" style="position:absolute;right:0.5rem;top:0.5rem;z-index:3;">
+    <div class="wishlist-heart" data-wishlist-productid="{{PRODUCT_ID}}" data-wishlist-id="{{HEART_ID}}" data-wishlist-title="{{TITLE}}" data-wishlist-desc="{{DESC}}" data-wishlist-price="{{PRICE}}" data-wishlist-img="{{MAIN_IMAGE}}" data-wishlist-album="{{ALBUM}}" title="Wishlist" style="position:absolute;right:0.5rem;top:0.5rem;z-index:3;">
         <svg width="28" height="28" viewBox="0 0 24 24" stroke="#ff4d6d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M12 21s-6.5-4.35-9-7.5C1.5 10.5 2.5 7 6 7c2.1 0 3.5 1.5 4 2.5C10.5 8.5 11.9 7 14 7c3.5 0 4.5 3.5 3 6.5-2.5 3.15-9 7.5-9 7.5z"/></svg>
       </div>
   <button id="arrowLeft" class="nav-arrow left" aria-label="Previous image">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4fc3f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <img id="mainImg" src="uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp" alt="HUNTING BOWIE KNIFE Gift for men" class="album-main-img">
+      <img id="mainImg" src="{{MAIN_IMAGE}}" alt="{{TITLE}}" class="album-main-img">
   <button id="arrowRight" class="nav-arrow right" aria-label="Next image">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4fc3f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <div id="magnifierLens" class="magnifier-lens"></div>
     </div>
-    <div id="albumThumbs" class="album-thumbs"><img class='album-thumb selected' src='uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp' data-img='uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp' alt='HUNTING BOWIE KNIFE Gift for men'></div>
+    <div id="albumThumbs" class="album-thumbs">{{IMAGES}}</div>
   </div>
 
   <div class="album-info">
-    <div class="album-title">HUNTING BOWIE KNIFE Gift for men</div>
-    <div class="album-desc">— Warranty: Manufacturer&#39;s 90 Day
-— 9&quot; 4340 + 1095 Damascus Steel Blade
-— Bird&#39;s Eye Pattern
-— 5&quot; Olive &amp; Rose Wood Handle</div>
-    <div class="album-details" style="margin-top:0.5rem">Color Brown
-Materials Damascus Steel
-Measurements 14"L x 2"W x 0.75"H</div>
+    <div class="album-title">{{TITLE}}</div>
+    <div class="album-desc">{{DESC}}</div>
+    <div class="album-details" style="margin-top:0.5rem">{{DETAILS}}</div>
 
     <div class="quantity-row">
       <label class="quantity-label">Quantity:</label>
@@ -114,9 +106,9 @@ Measurements 14"L x 2"W x 0.75"H</div>
 
     <div class="price-row">
       <div style="font-weight:600;color:#ffb347;">Price per item:</div>
-  <div id="unitPrice">$250.00</div>
+  <div id="unitPrice">{{PRICE_HTML}}</div>
       <div style="font-weight:600;color:#4fc3f7;margin-left:1rem;">Total:</div>
-  <div id="totalPrice" style="font-weight:700">$250.00</div>
+  <div id="totalPrice" style="font-weight:700">{{TOTAL_PRICE_HTML}}</div>
     </div>
 
     <div style="margin-top:1rem">
@@ -158,21 +150,21 @@ Measurements 14"L x 2"W x 0.75"H</div>
   // Use JSON.parse on the JSON string literals produced by the generator so
   // we never introduce raw backticks or single-quoted HTML into the inline script.
   window.__ALBUM_PLACEHOLDERS = {
-    title: (function(){ try{ return JSON.parse('"HUNTING BOWIE KNIFE Gift for men"'); }catch(e){ return '"HUNTING BOWIE KNIFE Gift for men"'; } })(),
-    desc: (function(){ try{ return JSON.parse('"— Warranty: Manufacturer's 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird's Eye Pattern\n— 5\" Olive & Rose Wood Handle"'); }catch(e){ try{ return '"— Warranty: Manufacturer's 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird's Eye Pattern\n— 5\" Olive & Rose Wood Handle"'; }catch(e2){ return ''; } } })(),
-    price: (function(){ try{ return JSON.parse('"250"'); }catch(e){ return '"250"'; } })(),
-    mainImage: (function(){ try{ return JSON.parse('"uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp"'); }catch(e){ return '"uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp"'; } })(),
+    title: (function(){ try{ return JSON.parse('{{JS_TITLE}}'); }catch(e){ return '{{JS_TITLE}}'; } })(),
+    desc: (function(){ try{ return JSON.parse('{{JS_DESC}}'); }catch(e){ try{ return '{{JS_DESC}}'; }catch(e2){ return ''; } } })(),
+    price: (function(){ try{ return JSON.parse('{{JS_PRICE}}'); }catch(e){ return '{{JS_PRICE}}'; } })(),
+    mainImage: (function(){ try{ return JSON.parse('{{JS_MAIN_IMAGE}}'); }catch(e){ return '{{JS_MAIN_IMAGE}}'; } })(),
   // Avoid embedding raw HTML into inline JS which can break when HTML contains
   // unescaped quotes. Read the thumbnail markup from the DOM at runtime instead.
   imagesHtml: (function(){ try{ var el = document.getElementById('albumThumbs'); return (el && el.innerHTML) ? el.innerHTML : ''; }catch(e){ return ''; } })(),
-    heartId: (function(){ try{ return JSON.parse('"hn1"'); }catch(e){ return '"hn1"'; } })(),
-    detailsJson: (function(){ try{ return JSON.parse('{"0":"C","1":"o","2":"l","3":"o","4":"r","5":" ","6":"B","7":"r","8":"o","9":"w","10":"n","11":"\n","12":"M","13":"a","14":"t","15":"e","16":"r","17":"i","18":"a","19":"l","20":"s","21":" ","22":"D","23":"a","24":"m","25":"a","26":"s","27":"c","28":"u","29":"s","30":" ","31":"S","32":"t","33":"e","34":"e","35":"l","36":"\n","37":"M","38":"e","39":"a","40":"s","41":"u","42":"r","43":"e","44":"m","45":"e","46":"n","47":"t","48":"s","49":" ","50":"1","51":"4","52":"\"","53":"L","54":" ","55":"x","56":" ","57":"2","58":"\"","59":"W","60":" ","61":"x","62":" ","63":"0","64":".","65":"7","66":"5","67":"\"","68":"H","displayId":"hn1"}'); }catch(e){ return {}; } })(),
-    albumFilename: (function(){ try{ return JSON.parse('"hunting_bowie_knife_gift_for_men.html"'); }catch(e){ return '"hunting_bowie_knife_gift_for_men.html"'; } })(),
-    productId: (function(){ try{ return JSON.parse('"8b17d2d1-112c-4c33-bea4-c2b4ca9247cd"'); }catch(e){ return '"8b17d2d1-112c-4c33-bea4-c2b4ca9247cd"'; } })(),
+    heartId: (function(){ try{ return JSON.parse('{{JS_HEART_ID}}'); }catch(e){ return '{{JS_HEART_ID}}'; } })(),
+    detailsJson: (function(){ try{ return JSON.parse('{{DETAILS_JSON}}'); }catch(e){ return {}; } })(),
+    albumFilename: (function(){ try{ return JSON.parse('{{JS_ALBUM}}'); }catch(e){ return '{{JS_ALBUM}}'; } })(),
+    productId: (function(){ try{ return JSON.parse('{{JS_PRODUCT_ID}}'); }catch(e){ return '{{JS_PRODUCT_ID}}'; } })(),
   // Sale JSON: either null or an object { active, price, prevPrice }
-  // Generator will replace null with raw JSON (no surrounding quotes).
-  sale: (function(){ try{ return JSON.parse('null'); }catch(e){ return null; } })(),
-  reviewsApi: (function(){ try{ return JSON.parse('"/api/products/8b17d2d1-112c-4c33-bea4-c2b4ca9247cd/reviews"'); }catch(e){ try{ if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') return null; return (window.location && window.location.origin ? window.location.origin : '') + (window.location && window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : ''); }catch(e2){ return null; } } })()
+  // Generator will replace {{SALE_JSON}} with raw JSON (no surrounding quotes).
+  sale: (function(){ try{ return JSON.parse('{{SALE_JSON}}'); }catch(e){ return null; } })(),
+  reviewsApi: (function(){ try{ return JSON.parse('{{JS_REVIEWS_API}}'); }catch(e){ try{ if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') return null; return (window.location && window.location.origin ? window.location.origin : '') + (window.location && window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : ''); }catch(e2){ return null; } } })()
   }
   </script>
   <!-- Shared runtime for album pages (extracted from inline template) -->
@@ -273,7 +265,7 @@ Measurements 14"L x 2"W x 0.75"H</div>
     try { if (heartEl && heartEl.dataset && heartEl.dataset.wishlistSale) { _sale = JSON.parse(heartEl.dataset.wishlistSale); } } catch(e){ _sale = null; }
     if((!_sale || !_sale.active) && typeof window !== 'undefined' && window.__ALBUM_PLACEHOLDERS && window.__ALBUM_PLACEHOLDERS.sale){ _sale = window.__ALBUM_PLACEHOLDERS.sale; }
 
-    const product = { id, title, name:title, desc, price: unit, img: mainImage, images: galleryImages, album: 'hunting_bowie_knife_gift_for_men.html' || window.location.pathname.split('/').pop(), details, quantity: qty, sale: _sale };
+    const product = { id, title, name:title, desc, price: unit, img: mainImage, images: galleryImages, album: '{{ALBUM}}' || window.location.pathname.split('/').pop(), details, quantity: qty, sale: _sale };
     let catalogue = [];
     try{ catalogue = JSON.parse(localStorage.getItem('catalogue')||'[]'); }catch(e){ catalogue = []; }
     const idx = catalogue.findIndex(it=>it.id===product.id || (it.title && it.title===product.title));

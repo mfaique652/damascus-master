@@ -114,9 +114,9 @@ Measurements 14"L x 2"W x 0.75"H</div>
 
     <div class="price-row">
       <div style="font-weight:600;color:#ffb347;">Price per item:</div>
-  <div id="unitPrice">$250.00</div>
+  <div id="unitPrice"><span class="orig-price" style="text-decoration:line-through;color:#9aa3af;margin-right:0.6rem">$250.00</span><span class="sale-price" style="background:#fff;color:#000;padding:0.2em 0.6em;border-radius:0.4em;font-weight:800">$100.00</span></div>
       <div style="font-weight:600;color:#4fc3f7;margin-left:1rem;">Total:</div>
-  <div id="totalPrice" style="font-weight:700">$250.00</div>
+  <div id="totalPrice" style="font-weight:700">$100.00</div>
     </div>
 
     <div style="margin-top:1rem">
@@ -159,7 +159,7 @@ Measurements 14"L x 2"W x 0.75"H</div>
   // we never introduce raw backticks or single-quoted HTML into the inline script.
   window.__ALBUM_PLACEHOLDERS = {
     title: (function(){ try{ return JSON.parse('"HUNTING BOWIE KNIFE Gift for men"'); }catch(e){ return '"HUNTING BOWIE KNIFE Gift for men"'; } })(),
-    desc: (function(){ try{ return JSON.parse('"— Warranty: Manufacturer's 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird's Eye Pattern\n— 5\" Olive & Rose Wood Handle"'); }catch(e){ try{ return '"— Warranty: Manufacturer's 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird's Eye Pattern\n— 5\" Olive & Rose Wood Handle"'; }catch(e2){ return ''; } } })(),
+    desc: (function(){ try{ return JSON.parse('"— Warranty: Manufacturer\'s 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird\'s Eye Pattern\n— 5\" Olive & Rose Wood Handle"'); }catch(e){ try{ return '"— Warranty: Manufacturer\'s 90 Day\n— 9\" 4340 + 1095 Damascus Steel Blade\n— Bird\'s Eye Pattern\n— 5\" Olive & Rose Wood Handle"'; }catch(e2){ return ''; } } })(),
     price: (function(){ try{ return JSON.parse('"250"'); }catch(e){ return '"250"'; } })(),
     mainImage: (function(){ try{ return JSON.parse('"uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp"'); }catch(e){ return '"uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp"'; } })(),
   // Avoid embedding raw HTML into inline JS which can break when HTML contains
@@ -170,8 +170,8 @@ Measurements 14"L x 2"W x 0.75"H</div>
     albumFilename: (function(){ try{ return JSON.parse('"hunting_bowie_knife_gift_for_men.html"'); }catch(e){ return '"hunting_bowie_knife_gift_for_men.html"'; } })(),
     productId: (function(){ try{ return JSON.parse('"8b17d2d1-112c-4c33-bea4-c2b4ca9247cd"'); }catch(e){ return '"8b17d2d1-112c-4c33-bea4-c2b4ca9247cd"'; } })(),
   // Sale JSON: either null or an object { active, price, prevPrice }
-  // Generator will replace null with raw JSON (no surrounding quotes).
-  sale: (function(){ try{ return JSON.parse('null'); }catch(e){ return null; } })(),
+  // Generator will replace {"active":true,"price":100,"prevPrice":250} with raw JSON (no surrounding quotes).
+  sale: (function(){ try{ return JSON.parse('{"active":true,"price":100,"prevPrice":250}'); }catch(e){ return null; } })(),
   reviewsApi: (function(){ try{ return JSON.parse('"/api/products/8b17d2d1-112c-4c33-bea4-c2b4ca9247cd/reviews"'); }catch(e){ try{ if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') return null; return (window.location && window.location.origin ? window.location.origin : '') + (window.location && window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : ''); }catch(e2){ return null; } } })()
   }
   </script>
@@ -272,7 +272,6 @@ Measurements 14"L x 2"W x 0.75"H</div>
     let _sale = null;
     try { if (heartEl && heartEl.dataset && heartEl.dataset.wishlistSale) { _sale = JSON.parse(heartEl.dataset.wishlistSale); } } catch(e){ _sale = null; }
     if((!_sale || !_sale.active) && typeof window !== 'undefined' && window.__ALBUM_PLACEHOLDERS && window.__ALBUM_PLACEHOLDERS.sale){ _sale = window.__ALBUM_PLACEHOLDERS.sale; }
-
     const product = { id, title, name:title, desc, price: unit, img: mainImage, images: galleryImages, album: 'hunting_bowie_knife_gift_for_men.html' || window.location.pathname.split('/').pop(), details, quantity: qty, sale: _sale };
     let catalogue = [];
     try{ catalogue = JSON.parse(localStorage.getItem('catalogue')||'[]'); }catch(e){ catalogue = []; }
@@ -285,7 +284,6 @@ Measurements 14"L x 2"W x 0.75"H</div>
     localStorage.setItem('catalogue', JSON.stringify(catalogue));
     const toast = document.createElement('div'); toast.textContent = idx!==-1 ? 'Updated quantity in catalogue' : 'Added to catalogue'; toast.style.position='fixed'; toast.style.bottom='18px'; toast.style.right='18px'; toast.style.background='#23262f'; toast.style.color='#fff'; toast.style.padding='10px 14px'; toast.style.borderRadius='8px'; toast.style.zIndex=99999; toast.style.boxShadow='0 8px 24px rgba(0,0,0,0.18)'; document.body.appendChild(toast); setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend', ()=> toast.remove()); }, 1600); setTimeout(()=>{ try{ toast.remove(); }catch(e){} }, 3000);
   }catch(e){ console.error('Add failed',e); } }); }
-
   // Reviews client + star UI
   (function(){
     const productId = window.__ALBUM_PLACEHOLDERS.productId || '';
@@ -328,15 +326,12 @@ Measurements 14"L x 2"W x 0.75"H</div>
       }catch(err){ console.error(err); showToast('Failed to submit review', true); }
       finally{ if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = submitBtn.dataset.orig || 'Submit'; } }
     }); }
-
     // lightweight toast helper
     function showToast(msg, isError){ try{ const t = document.createElement('div'); t.textContent = msg; t.style.position='fixed'; t.style.bottom='18px'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.background = isError? '#b00020' : '#23262f'; t.style.color='#fff'; t.style.padding='10px 14px'; t.style.borderRadius='8px'; t.style.zIndex=99999; t.style.boxShadow='0 8px 24px rgba(0,0,0,0.18)'; document.body.appendChild(t); setTimeout(()=>{ t.style.opacity='0'; t.addEventListener('transitionend', ()=> t.remove()); }, 1600); setTimeout(()=>{ try{ t.remove(); }catch(e){} }, 3000); }catch(e){ console.warn('toast failed', e); } }
     loadReviews();
   })();
-
 })();
 </script>
-
 </body>
 </html>
 

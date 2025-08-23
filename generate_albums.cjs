@@ -213,16 +213,49 @@ function main() {
       if (removed) console.log(`Sanitized ${removed} embedded <!DOCTYPE> block(s) from ${filename}`);
       return out;
     }
+    // Wrap top-level IIFEs that accidentally appear outside <script> tags
+    function wrapUnwrappedIIFEs(s) {
+      if (!s || typeof s !== 'string') return s;
+      const iifeRegexLocal = /\(function\(\)\s*\{[\s\S]*?\}\)\s*\(\)\s*;?/g;
+      let out = s;
+      let match;
+      // iterate matches from end to start to avoid index shifts
+      const matches = [];
+      while ((match = iifeRegexLocal.exec(s)) !== null) {
+        matches.push({ idx: match.index, len: match[0].length });
+      }
+      for (let i = matches.length - 1; i >= 0; i--) {
+        const idx = matches[i].idx;
+        const len = matches[i].len;
+        // if inside an existing <script> ... </script>, skip
+        const preOpen = out.lastIndexOf('<script', idx);
+        const preClose = out.lastIndexOf('</script>', idx);
+        if (preOpen > preClose) continue; // already inside script
+        // ensure we don't cross an opening script after idx
+        const afterOpen = out.indexOf('<script', idx);
+        if (afterOpen !== -1 && afterOpen < idx + len) continue;
+        const snippet = out.slice(idx, idx + len);
+        // skip if snippet already contains script tags
+        if (snippet.indexOf('<script') !== -1 || snippet.indexOf('</script>') !== -1) continue;
+        // replace by wrapped script
+        out = out.slice(0, idx) + '<script>\n' + snippet + '\n</script>' + out.slice(idx + len);
+      }
+      return out;
+    }
     try {
       const outPath = path.join(__dirname, filename);
       if (fs.existsSync(outPath)) {
         try { fs.copyFileSync(outPath, outPath + '.bak'); } catch (e) { }
       }
-  let candidate = String(htmlFinal);
+    // backup existing generated file (we also will create a larger regen backup separately if desired)
+    try { if (fs.existsSync(outPath)) { fs.copyFileSync(outPath, outPath + '.bak'); } } catch (e) { }
+    let candidate = String(htmlFinal);
   candidate = candidate.replace(/\}'active"?:true,?"price"?:\d+(?:\.\d+)?(?:,"prevPrice"?:\d+(?:\.\d+)?)?\}'/g, '')
   candidate = candidate.replace(/\}'active"?:true,?price:\d+(?:\.\d+)?(?:,prevPrice:\d+(?:\.\d+)?)?\}'/g, '');
-  const clean = removeEmbeddedDoctypes(candidate);
-      fs.writeFileSync(outPath, clean);
+  let clean = removeEmbeddedDoctypes(candidate);
+    // wrap any accidental unwrapped IIFEs in <script> tags to avoid them rendering as page text
+    clean = wrapUnwrappedIIFEs(clean);
+    fs.writeFileSync(outPath, clean);
       console.log('Generated', filename);
     } catch (werr) {
       console.error('Failed to write', filename, werr && werr.stack ? werr.stack : werr);

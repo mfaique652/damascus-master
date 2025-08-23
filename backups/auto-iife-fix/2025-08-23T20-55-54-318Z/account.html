@@ -450,9 +450,7 @@
             <div id="account-logo-wrap">
               <img src="" alt="Profile" class="current-logo" id="current-logo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary);">
             </div>
-            <button class="btn-secondary" id="change-logo-btn" onclick="<script>
-(function(){ try { showLogoPicker(); } catch(e) { var inp=document.getElementById('custom-avatar-upload'); if (inp) inp.click(); } })();
-</script>">Change Avatar</button>
+            <button class="btn-secondary" id="change-logo-btn" onclick="(function(){ try { showLogoPicker(); } catch(e) { var inp=document.getElementById('custom-avatar-upload'); if (inp) inp.click(); } })();">Change Avatar</button>
             <input type="file" id="custom-avatar-upload" accept="image/*" style="display: none;">
           </div>
           <div class="input-group">

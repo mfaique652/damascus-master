@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Gateway</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <style>
+    body { background: linear-gradient(135deg,#f5f6fa,#e3e9f7 60%,#d4eaff); font-family: 'Poppins', Arial, sans-serif; }
+    .gateway-container { max-width: 520px; margin: 48px auto; padding: 32px 28px; background: #fff; border-radius: 16px; box-shadow: 0 6px 32px rgba(0,0,0,0.10); }
+    .gateway-title { font-size: 2em; margin-bottom: 24px; font-weight: 700; color: #003087; text-align: center; }
+    .gateway-option { margin-bottom: 20px; font-size: 1.1em; }
+    .email-section, .domain-section, .admin-section { margin-top: 40px; }
+    .btn { padding: 12px 28px; border: none; border-radius: 6px; background: linear-gradient(90deg,#0070f3,#25a87a); color: #fff; cursor: pointer; font-size: 1.08em; font-weight: 600; box-shadow: 0 2px 8px #0070f322; transition: background 0.2s; }
+    .btn:hover { background: linear-gradient(90deg,#003087,#25a87a); }
+    .btn-paypal { background: #003087; }
+    .btn-card { background: #25a87a; }
+    .input { width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #c3d0e8; border-radius: 6px; font-size: 1em; background: #f7fbff; }
+    h3 { font-size: 1.25em; color: #003087; margin-bottom: 18px; font-weight: 600; }
+    .section-label { font-size: 1.1em; color: #0070f3; margin-bottom: 8px; font-weight: 500; }
+    .admin-section { border-top: 1px solid #e3e9f7; padding-top: 32px; margin-top: 40px; }
+    .domain-section { border-top: 1px solid #e3e9f7; padding-top: 32px; margin-top: 40px; }
+    .domain-instructions { background: #f7fbff; border-radius: 8px; padding: 16px; color: #003087; font-size: 0.98em; margin-top: 12px; }
+    .current-domain { color: #25a87a; font-weight: 600; margin-bottom: 10px; }
+  </style>
+    <div class="domain-section">
+      <h3>Domain Setup</h3>
+      <div id="current-domain" class="current-domain">No domain set</div>
+      <form id="domain-form">
+  <input type="text" class="input" id="domain-input" placeholder="Enter your domain (e.g. damascusmaster.com)">
+        <button type="submit" class="btn">Save Domain</button>
+      </form>
+      <div id="domain-status"></div>
+      <div class="domain-instructions">
+        <b>Setup Instructions:</b><br>
+        1. Buy your domain from a provider (e.g. Namecheap, GoDaddy, Google Domains).<br>
+        2. Point your domain's DNS A record to your server's public IP address.<br>
+        3. (Recommended) Set up SSL using Let's Encrypt for HTTPS.<br>
+        4. Update your domain here to save and use it in your site config.<br>
+      </div>
+    </div>
+</head>
+<body>
+  <div style="display:flex;justify-content:center;gap:12px;margin-bottom:24px;">
+    <button class="btn" onclick="goToDashboard()">🗡️ Dashboard</button>
+    <button class="btn" onclick="goToGateway()">💳 Payment Gateway</button>
+  <button class="btn" onclick="window.location.href='admin.html?editor=1'">🎨 Visual Editor</button>
+  </div>
+  <div class="gateway-container" id="gateway-container" style="display:block;">
+    <script src="scripts/admin-switch.js"></script>
+    <div class="gateway-title">Choose Payment Method</div>
+    <form id="payment-form">
+      <div class="gateway-option">
+        <input type="radio" id="card" name="payment" value="card" checked>
+        <label for="card">Card</label>
+      </div>
+      <div class="gateway-option">
+        <input type="radio" id="paypal" name="payment" value="paypal">
+        <label for="paypal">PayPal</label>
+      </div>
+      <button type="submit" class="btn">Proceed to Payment</button>
+    </form>
+    <div id="payment-section"></div>
+    <div class="email-section">
+      <h3>Email Settings</h3>
+      <form id="email-form">
+          <input type="email" class="input" id="new-email" placeholder="New Sender Email" required>
+          <input type="password" class="input" id="new-email-pass" placeholder="Email Password" required>
+          <button type="submit" class="btn">Save Email</button>
+      </form>
+      <div id="email-status"></div>
+    <div id="current-email" style="margin-bottom:16px; color:#0070f3; font-weight:600; font-size:1.1em;">Loading current sender email...</div>
+      <hr style="margin:32px 0;">
+      <h3>Admin: PayPal Configuration</h3>
+      <form id="paypal-config-form">
+        <input type="email" class="input" id="paypal-email" placeholder="PayPal Account Email" required>
+        <input type="text" class="input" id="paypal-client-id" placeholder="PayPal Client ID" required>
+        <input type="text" class="input" id="paypal-client-secret" placeholder="PayPal Client Secret" required>
+        <select class="input" id="paypal-env">
+          <option value="live">Live</option>
+          <option value="sandbox">Sandbox</option>
+        </select>
+        <button type="submit" class="btn btn-paypal">Save PayPal Config</button>
+      </form>
+      <div id="paypal-config-status"></div>
+      <small style="color:#888;">Set your PayPal credentials here. Payments will go to this account.</small>
+    </div>
+  </div>
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+  <script src="scripts/payment-gateway.js"></script>
+  <script src="scripts/payment-gateway-admin.js"></script>
+  <script src="tools/admin-auth.js"></script>
+  <script>
+    // Use universal adminAuth for login and token verification
+    async function showGatewayPanel() {
+      document.getElementById('gateway-container').style.display = 'block';
+    }
+    async function showLoginPanel() {
+      // Redirect to admin.html for universal login panel
+      window.location.href = 'admin.html?redirect=payment-gateway';
+    }
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        const token = localStorage.getItem('adm_token') || '';
+        if (!token) {
+          showLoginPanel();
+          return;
+        }
+        if (window.adminAuth && typeof window.adminAuth.verifyAdminToken === 'function') {
+          const prof = await window.adminAuth.verifyAdminToken();
+          if (!prof) {
+            showLoginPanel();
+            return;
+          }
+          showGatewayPanel();
+          return;
+        }
+        // Fallback: direct profile check
+        try {
+          const resp = await fetch('/api/auth/profile', { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token } });
+          if (!resp.ok) {
+            showLoginPanel();
+            return;
+          }
+          showGatewayPanel();
+        } catch (e) {
+          showLoginPanel();
+        }
+      } catch (e) {
+        showLoginPanel();
+      }
+    });
+  </script>
+</body>
+</html>

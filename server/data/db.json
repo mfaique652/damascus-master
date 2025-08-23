@@ -574,12 +574,10 @@
       ],
       "position": 2,
       "createdAt": 1755373696118,
-      "topSeller": true,
-      "updatedAt": 1755979345474,
+      "topSeller": false,
+      "updatedAt": 1755982687096,
       "sale": {
-        "active": true,
-        "price": 100,
-        "prevPrice": 250
+        "active": false
       },
       "price": 250
     },
@@ -616,7 +614,13 @@
       ],
       "position": 3,
       "createdAt": 1755851154530,
-      "topSeller": false
+      "topSeller": false,
+      "sale": {
+        "active": true,
+        "price": 345,
+        "prevPrice": 2345
+      },
+      "updatedAt": 1755981443834
     }
   ],
   "albums": [],
