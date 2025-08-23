@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Local Server",
+      {
+        "version": "2.0.0",
+        "tasks": [
+          {
+            "label": "Start Local Server",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": [
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${workspaceFolder}\\run_local_server.ps1",
+              "-Port",
+              "3026",
+              "-Watch"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+              "reveal": "always",
+              "panel": "dedicated"
+            }
+          }
+        ]
+      }
+      "label": "Start Local Server",

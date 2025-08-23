@@ -1,0 +1,20 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@vercel/speed-insights": "^1.2.0",
+    "bcrypt": "^6.0.0"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "clean": "node cleanup_albums.js",
+    "cleanup:regen": "node ./tools/cleanup_regen_files.js",
+    "watch:clean": "nodemon --watch server/data/db.json --exec \"node cleanup_albums.js\"",
+    "verify:generated": "node generate_albums.js && node tools/check_generated_html.js && node tools/report_album_sales.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "nodemon": "^3.1.10",
+    "puppeteer": "^24.17.0"
+  }
+}

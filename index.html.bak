@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Damascus Master</title>
+  <!-- Google Fonts for modern, premium look -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <style>
+    /* === ROOT VARIABLES === */
+    :root {
+      --primary: #ffb347;
+      --primary-dark: #ff8800;
+      --accent: #00e6d0;
+      --bg: #181a20;
+      --bg-light: #23262f;
+      --text: #f5f6fa;
+      --text-muted: #b0b3b8;
+      --card: #23262f;
+      --shadow: 0 0.25rem 2rem 0 rgba(0,0,0,0.18);
+      --radius: 1.2rem;
+      --header-h: 64px;
+      --container-max: min(1200px, 94vw);
+    }
+
+    /* === GLOBAL RESET === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+      background: #fff !important;
+      color: #111 !important;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    ... (truncated for brevity) ...

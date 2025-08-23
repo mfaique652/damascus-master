@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Damascus Master favicon">
+  <style>
+    :root { --bg: #ffffff; color: #000000; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #000000; color: #ffffff; }
+    }
+    svg { width: 64px; height: 64px; }
+    .bg { fill: var(--bg); }
+    .dm { fill: currentColor; }
+    .swoosh { stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke-width: 1.6; }
+  </style>
+
+  <!-- Background rectangle (theme-aware) -->
+  <rect class="bg" x="0" y="0" width="64" height="64" rx="6" />
+
+  <!-- Stylized DM letters using text (with serif) and a decorative swoosh path -->
+  <g transform="translate(0,2)">
+    <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle"
+          font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="34"
+          class="dm">DM</text>
+
+    <!-- Decorative swoosh/curve to emulate the artistic flourish -->
+    <path class="swoosh" d="M9 40 C 18 28, 28 18, 44 16" opacity="0.95" />
+    <path class="swoosh" d="M12 44 C 22 34, 34 22, 52 18" opacity="0.6" />
+  </g>
+</svg>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>{{TITLE}} - Product</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <style>
+    html { font-size: 16px; }
+    /* Light / white theme */
+  .wishlist-heart { position: absolute; top: 0.6rem; right: 0.6rem; z-index: 60; background: rgba(0,0,0,0.06); border-radius: 50%; padding: 0.18em; cursor: pointer; transition: background 0.15s; box-shadow: 0 4px 10px rgba(16,24,40,0.06); display: flex; align-items: center; justify-content: center; }
+    .wishlist-heart:hover { background: rgba(0,0,0,0.06); }
+    .wishlist-heart svg.heart-filled path { fill: #e95454; stroke: #e95454; }
+    .wishlist-heart svg.heart-filled path { fill: #e95454; stroke: #e95454; }
+    /* Sale ribbon styling (rendered at runtime) */
+    .sale-ribbon { position:absolute; top:12px; left:-42px; transform:rotate(-45deg); width:160px; padding:6px 0; background:#fff; color:#000; font-weight:800; font-size:0.9rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.38); z-index:12 }
+  </style>
+<script>
+  // Use JSON-safe JS placeholders (the generator will inject proper JSON literals)
+  window.__ALBUM_PLACEHOLDERS = {
+    title: {{JS_TITLE}},
+    desc: {{JS_DESC}},
+    price: {{JS_PRICE}},
+    mainImage: {{JS_MAIN_IMAGE}},
+    imagesHtml: {{JS_IMAGES}},
+    heartId: {{JS_HEART_ID}},
+    detailsJson: {{DETAILS_JSON}},
+    albumFilename: {{JS_ALBUM}},
+    productId: {{JS_PRODUCT_ID}},
+    // reviews API and optional sale object (injected by generator)
+    reviewsApi: {{JS_REVIEWS_API}} || (window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : ''),
+  sale: {{SALE_JSON}} || null
+  };
+</script>
+{{SALE_SCRIPT}}
+<script src="site.js"></script>
+
+<script>
+  // Small runtime sale renderer: reads window.__ALBUM_PLACEHOLDERS.sale and updates the DOM safely.
+  (function(){
+    try{
+      const sale = (window.__ALBUM_PLACEHOLDERS && window.__ALBUM_PLACEHOLDERS.sale) ? window.__ALBUM_PLACEHOLDERS.sale : null;
+      if (!sale || !sale.active) return;
+      const prev = (sale.prevPrice && Number(sale.prevPrice)>0) ? Number(sale.prevPrice) : 0;
+      const sp = Number(sale.price || 0);
+      const pct = (prev>0) ? Math.round(((prev - sp)/prev)*100) : 0;
+      const mainWrap = document.querySelector('.main-img-wrap');
+      if (mainWrap) {
+        const ribbon = document.createElement('div');
+        ribbon.className = 'sale-ribbon';
+        ribbon.textContent = '-' + pct + '%';
+        mainWrap.style.overflow = 'hidden';
+        mainWrap.appendChild(ribbon);
+      }
+      const unitEl = document.getElementById('unitPrice');
+      const totalEl = document.getElementById('totalPrice');
+      if (unitEl) unitEl.innerHTML = `<span style="text-decoration:line-through;color:#999;margin-right:0.6rem">${prev>0?('$'+prev.toFixed(2)) : ''}</span><span class=\"sale-price\" style=\"background:#fff;color:#000;padding:0.2em 0.6em;border-radius:0.4em;font-weight:800\">${'$'+sp.toFixed(2)}</span>`;
+      if (totalEl) { const qty = parseInt(document.getElementById('qtySlider')?.value||'1',10)||1; totalEl.innerHTML = `<span style=\"background:#fff;color:#000;padding:0.2em 0.6em;border-radius:0.4em;font-weight:800\">${'$'+(sp * qty).toFixed(2)}</span>`; }
+    }catch(e){ /* ignore */ }
+  })();
+</script>
+
+</body>
+</html>
+
+

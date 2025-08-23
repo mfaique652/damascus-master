@@ -1,0 +1,20 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/faiqs/AppData": true,
+    "**/faiqs/AppData/**": true,
+    "**/faiqs/**/resources/**": true,
+    "**/faiqs/**/Local/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/faiqs/**": true
+  },
+  "eslint.validate": ["javascript"],
+  "files.watcherExclude": {
+    "**/node_modules/*": true,
+    "**/faiqs/**": true
+  }
+}

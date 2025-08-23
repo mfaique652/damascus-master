@@ -1,0 +1,32 @@
+name: Verify generated HTML
+
+on:
+  push:
+    paths:
+      - '**/*.html'
+      - 'generate_albums.js'
+      - 'album_template.html'
+      - 'tools/**'
+  pull_request:
+    paths:
+      - '**/*.html'
+      - 'generate_albums.js'
+      - 'album_template.html'
+      - 'tools/**'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci --silent || true
+      - name: Run generator and verify
+        run: |
+          node generate_albums.js
+          node tools/check_generated_html.js
+          node tools/report_album_sales.js
