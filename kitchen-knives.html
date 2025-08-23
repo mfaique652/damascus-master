@@ -8,7 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   
   <style>
-    /* === GLOBAL RESET === */
+/* === GLOBAL RESET === */
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -1614,7 +1614,70 @@
     max-height: 90vh;
   }
 }
-  </style>
+
+/* merged: separator */
+
+.site-footer {
+        background: #23262f;
+        color: #f5f6fa;
+        padding: 2.5rem 0 1.5rem 0;
+        margin-top: 3rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .site-footer .footer-columns {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 2.5rem;
+      }
+      .site-footer .footer-column {
+        min-width: 220px;
+        flex: 1;
+        margin-bottom: 1.5rem;
+      }
+      .site-footer h4 {
+        color: #ffb347;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.7rem;
+        letter-spacing: 0.03em;
+      }
+      .site-footer a {
+        color: #f5f6fa;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 0.4rem;
+        display: block;
+        transition: color 0.2s;
+      }
+      .site-footer a:hover {
+        color: #ffb347;
+        text-decoration: underline;
+      }
+      .site-footer .social-icons a {
+        display: inline-block;
+        margin-right: 0.7rem;
+        font-size: 1.5rem;
+        color: #f5f6fa;
+        transition: color 0.2s;
+      }
+      .site-footer .social-icons a:hover {
+        color: #ffb347;
+      }
+      @media (max-width: 900px) {
+        .site-footer .footer-columns {
+          flex-direction: column;
+          align-items: center;
+        }
+        .site-footer .footer-column {
+          min-width: 100%;
+        }
+      }
+</style>
 </head>
 <body>
   <div class="header-bar">
@@ -1692,68 +1755,7 @@
   }
   document.getElementById('sidebarOverlay').addEventListener('click', closeMenu);
   </script>
-    <style>
-      .site-footer {
-        background: #23262f;
-        color: #f5f6fa;
-        padding: 2.5rem 0 1.5rem 0;
-        margin-top: 3rem;
-        width: 100%;
-        box-sizing: border-box;
-      }
-      .site-footer .footer-columns {
-        max-width: 1200px;
-        margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 2.5rem;
-      }
-      .site-footer .footer-column {
-        min-width: 220px;
-        flex: 1;
-        margin-bottom: 1.5rem;
-      }
-      .site-footer h4 {
-        color: #ffb347;
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin-bottom: 0.7rem;
-        letter-spacing: 0.03em;
-      }
-      .site-footer a {
-        color: #f5f6fa;
-        text-decoration: none;
-        font-weight: 500;
-        margin-bottom: 0.4rem;
-        display: block;
-        transition: color 0.2s;
-      }
-      .site-footer a:hover {
-        color: #ffb347;
-        text-decoration: underline;
-      }
-      .site-footer .social-icons a {
-        display: inline-block;
-        margin-right: 0.7rem;
-        font-size: 1.5rem;
-        color: #f5f6fa;
-        transition: color 0.2s;
-      }
-      .site-footer .social-icons a:hover {
-        color: #ffb347;
-      }
-      @media (max-width: 900px) {
-        .site-footer .footer-columns {
-          flex-direction: column;
-          align-items: center;
-        }
-        .site-footer .footer-column {
-          min-width: 100%;
-        }
-      }
-    </style>
+    
     <div class="footer-columns">
       <div class="footer-column">
         <h4>CONTACT INFO</h4>

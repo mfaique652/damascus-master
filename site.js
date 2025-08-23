@@ -106,7 +106,8 @@
   // Sale ribbon placed on the left as a diagonal badge showing percentage
   // Ensure the inline style forces visibility/stacking in case page-level CSS hides .sale-ribbon
   // Use inside-card positioning (left/top 0.6rem) so the badge isn't clipped when parent has overflow:hidden
-  const saleHtml = isOnSale ? `<div class="sale-ribbon" style="position:absolute;top:0.6rem;left:0.6rem;transform:none;min-width:48px;padding:6px 8px;background:linear-gradient(90deg,#ff5a5a,#ff8a5a);color:#fff;font-weight:800;font-size:0.85rem;text-align:center;border-radius:0.45rem;box-shadow:0 2px 8px rgba(0,0,0,0.22);display:inline-block !important;visibility:visible !important;opacity:1 !important;z-index:9999">-${percentOff}%</div>` : '';
+  // Use the shared .sale-ribbon class; visual styling is handled in css/theme.css
+  const saleHtml = isOnSale ? `<div class="sale-ribbon">-${percentOff}%</div>` : '';
   // Price HTML: original struck-through and sale price with white background and black text
   const priceHtml = isOnSale ? `<div style="display:flex;gap:0.6rem;align-items:center"><div class="orig-price" style="text-decoration:line-through;color:#999">${price(origPriceVal)}</div><div class="sale-price" style="background:#fff;color:#000;font-weight:800;font-size:1.15rem;padding:0.2em 0.6em;border-radius:0.5em">${price(salePriceVal)}</div></div>` : `<div class="knife-price" style="color:#fff;background:#181c23;font-weight:800;font-size:1.35rem;margin-top:0.7rem;padding:0.3em 0.9em;border-radius:0.6em;box-shadow:0 2px 10px #0006;letter-spacing:0.03em;display:inline-block;float:none;clear:both;">${price(p.price)}</div>`;
   const node = el(`

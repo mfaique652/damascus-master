@@ -145,23 +145,28 @@
 
 <!-- Generator placeholders and site JS -->
   <script>
-  // Generator will replace JS_* placeholders with JSON-safe literals.
-  // Use JSON.parse on the JSON string literals produced by the generator so
-  // we never introduce raw backticks or single-quoted HTML into the inline script.
+  // Generator will replace placeholders ({{...}}) with product-specific values
   window.__ALBUM_PLACEHOLDERS = {
-    title: (function(){ try{ return JSON.parse("Kitchen Hunter" && JSON.stringify("Kitchen Hunter")); }catch(e){ return "Kitchen Hunter"; } })(),
-    desc: (function(){ try{ return JSON.parse("" && JSON.stringify("")); }catch(e){ return ""; } })(),
-    price: (function(){ try{ return JSON.parse("120" && JSON.stringify("120")); }catch(e){ return "120"; } })(),
-    mainImage: (function(){ try{ return JSON.parse("uploads/1755803571570-Cigar.png" && JSON.stringify("uploads/1755803571570-Cigar.png")); }catch(e){ return "uploads/1755803571570-Cigar.png"; } })(),
-  imagesHtml: (function(){ try{ return "<img class='album-thumb selected' src='uploads/1755803571570-Cigar.png' data-img='uploads/1755803571570-Cigar.png' alt='Kitchen Hunter'>\n        <img class='album-thumb' src='uploads/1755803571622-custom.png' data-img='uploads/1755803571622-custom.png' alt='Kitchen Hunter'>\n        <img class='album-thumb' src='uploads/1755803571646-cutter.jpg' data-img='uploads/1755803571646-cutter.jpg' alt='Kitchen Hunter'>\n        <img class='album-thumb' src='uploads/1755803571646-cutter.png' data-img='uploads/1755803571646-cutter.png' alt='Kitchen Hunter'>"; }catch(e){ return ''; } })(),
-    heartId: (function(){ try{ return JSON.parse("kn2" && JSON.stringify("kn2")); }catch(e){ return "kn2"; } })(),
-    detailsJson: (function(){ try{ return {}; }catch(e){ return {}; } })(),
-    albumFilename: (function(){ try{ return JSON.parse("kitchen_hunter.html" && JSON.stringify("kitchen_hunter.html")); }catch(e){ return "kitchen_hunter.html"; } })(),
-    productId: (function(){ try{ return JSON.parse("d93e8ccf-28a4-4c6e-bf2b-ec402fe42741" && JSON.stringify("d93e8ccf-28a4-4c6e-bf2b-ec402fe42741")); }catch(e){ return "d93e8ccf-28a4-4c6e-bf2b-ec402fe42741"; } })(),
+    title: 'Kitchen Hunter',
+    desc: '',
+    price: '120',
+    mainImage: 'uploads/1755803571570-Cigar.png',
+  imagesHtml: `
+    <img class='album-thumb selected' src='uploads/1755803571570-Cigar.png' data-img='uploads/1755803571570-Cigar.png' alt='Kitchen Hunter'>
+    <img class='album-thumb' src='uploads/1755803571622-custom.png' data-img='uploads/1755803571622-custom.png' alt='Kitchen Hunter'>
+    <img class='album-thumb' src='uploads/1755803571646-cutter.jpg' data-img='uploads/1755803571646-cutter.jpg' alt='Kitchen Hunter'>
+    <img class='album-thumb' src='uploads/1755803571646-cutter.png' data-img='uploads/1755803571646-cutter.png' alt='Kitchen Hunter'>
+  `,
+    heartId: 'kn2',
+    detailsJson: '',
+    albumFilename: 'kitchen_hunter.html',
+    productId: 'd93e8ccf-28a4-4c6e-bf2b-ec402fe42741',
     // Sale JSON: either null or an object { active, price, prevPrice }
-    sale: (function(){ try{ return null; }catch(e){ return null; } })(),
-    reviewsApi: (function(){ try{ return JSON.parse("/api/products/d93e8ccf-28a4-4c6e-bf2b-ec402fe42741/reviews" && JSON.stringify("/api/products/d93e8ccf-28a4-4c6e-bf2b-ec402fe42741/reviews")); }catch(e){ return (window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : ''); } })()
-  }
+    sale: null,
+    reviewsApi: '/api/products/d93e8ccf-28a4-4c6e-bf2b-ec402fe42741/reviews' || (window.location.pathname ? '/api/products/' + (window.location.pathname.split('/').pop().toLowerCase()) + '/reviews' : '')
+  };
+  /* inline script marker for smoke-check */
+  window.__ALBUM_PLACEHOLDERS.sale;
   </script>
 
   <!-- Shared runtime for album pages (extracted from inline template) -->

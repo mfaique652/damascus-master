@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order - Damascus Master</title>
+  <style>
+    :root {
+      --bg: #181a20;
+      --card: #23262f;
+      --ink: #f5f6fa;
+      --muted: #b0b3b8;
+      --primary: #ffcc00;
+      --accent: #00ff99;
+      --danger: #ff4444;
+      --shadow: 0 4px 24px rgba(0,0,0,0.18);
+      --radius: 1rem;
+    }
+    html, body {
+      margin: 0; padding: 0; background: linear-gradient(135deg,#23262f,#181a20); color: var(--ink);
+      font-family: Montserrat, Roboto, Arial, sans-serif;
+    }
+    .container {
+      max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem;
+    }
+    h1 { color: var(--primary); margin: 0.5rem 0 1rem; font-size: 1.8rem; text-align: center; }
+    .order-wrap {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; align-items: start;
+    }
+    @media (max-width: 900px) { .order-wrap { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      border: 1px solid #2a2f3a; /* crisper edges */
+      overflow: hidden;         /* smooth clipped corners */
+    }
+
+    /* Items */
+    .items-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .item { display: grid; grid-template-columns: 76px 1fr auto; gap: 0.8rem; align-items: start; background:#1e2129; border-radius: 0.9rem; padding: 0.6rem; position: relative; overflow: hidden; }
+    .item img.main { width: 76px; height: 76px; object-fit: cover; border-radius: 0.6rem; background:#15171c; border: 1px solid #2a2f3a; }
+  .item { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .item::before { content: ""; position: absolute; inset: 0 0 0 0; pointer-events: none; }
+  .item::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, rgba(255,204,0,0.75), rgba(255,136,0,0.75)); opacity: 0.85; }
+  .item:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(0,0,0,0.25); }
+  .item-title { color: var(--primary); font-weight: 700; margin-bottom: 0.2rem; }
+  .item-desc { color: var(--ink); font-size: 0.95rem; margin-bottom: 0.3rem; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+  .item-desc.expanded { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
+  .show-more-btn { background: none; border: none; color: #ffb347; text-decoration: underline; cursor: pointer; padding: 0; font-size: 0.9rem; }
+  .item-details { 
+    color: #cccccc; 
+    font-size: 0.9rem; 
+    line-height: 1.35; 
+    background: rgba(25, 28, 35, 0.5); 
+    border-radius: 0.6rem; 
+    padding: 0.8rem; 
+    margin: 0.5rem 0;
+    text-align: left;
+  }
+  .item-details b { color: #ffe066; font-weight: 600; }
+  .thumbs { display: flex; gap: 0.3rem; margin-top: 0.4rem; overflow-x: auto; justify-content: center; }
+  .thumbs img { width: 40px; height: 40px; border-radius: 0.45rem; object-fit: cover; background:#13161c; transition: transform 0.12s ease; border: 1px solid #2a2f3a; }
+  .thumbs img:hover { transform: scale(1.06); }
+  .item-price { 
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: linear-gradient(90deg, #ff5722 0%, #ff8a50 100%);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(255, 87, 34, 0.3);
+  }
+  .item-meta { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
+  /* Remove button on each item */
+  .item-remove {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid #2a2f3a;
+    background: rgba(20,22,28,0.85);
+    color: #ff6666;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+  }
+  .item-remove:hover { background: rgba(35,38,47,0.95); color: #ff0000; transform: scale(1.05); }
+
+    /* Totals */
+    .totals { display: grid; gap: 0.35rem; }
+    .totals-row { display:flex; justify-content: space-between; }
+    .totals-row .label { color: var(--muted); }
+    .totals-row .value { color: var(--ink); font-weight: 600; }
+    .totals-row.total .label { color: var(--primary); font-weight: 700; }
+    .totals-row.total .value { color: var(--primary); font-weight: 800; }
+
+    /* Forms */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .form-grid-1 { display:grid; grid-template-columns: 1fr; gap: 0.6rem; }
+    @media (max-width:700px) { .form-grid { grid-template-columns: 1fr; } }
+    label { font-size: 0.9rem; color: var(--muted); }
+    input, select, textarea {
+      width: 100%; padding: 0.55rem 0.6rem; border-radius: 0.6rem; border: 1px solid #2e3340; background: #12151b; color: var(--ink);
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: #3a4050; box-shadow: 0 0 0 2px rgba(255,204,0,0.12);
+    }
+    .pay-methods { display:flex; gap: 0.8rem; margin: 0.5rem 0; }
+    .pay-card { display: grid; gap: 0.6rem; }
+    .pay-submit { display:flex; gap: 0.5rem; align-items:center; }
+    .btn {
+      background: linear-gradient(90deg,#ffb347,#ff8800); color:#181a20; border: 1px solid rgba(255,204,0,0.25); padding: 0.65rem 1rem; border-radius: 0.7rem; font-weight:700; cursor:pointer;
+    }
+    .btn:hover { filter: brightness(1.05); }
+    .back-link { color: #89b4ff; text-decoration: underline; cursor: pointer; }
+    .notice { color: var(--muted); font-size: 0.9rem; }
+    .ok { color: #9cff9c; }
+    .err { color: var(--danger); }
+    /* Sticky summary on larger screens */
+    @media (min-width: 901px) {
+      .right > .card { position: sticky; top: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Confirm your order</h1>
+    <div id="emptyState" class="card" style="display:none; text-align:center;">
+      No items to order. <a href="index.html" class="back-link">Go back</a>
+    </div>
+
+    <div class="order-wrap" id="orderWrap" style="display:none;">
+      <div class="left">
+        <div class="card">
+          <h2 style="margin:0 0 0.6rem;">Items</h2>
+          <div id="items" class="items-list"></div>
+        </div>
+
+        <div class="card" style="margin-top:1rem;">
+          <h2 style="margin:0 0 0.6rem;">Shipping details</h2>
+          <div class="form-grid">
+            <div>
+              <label>Full name</label>
+              <input id="ship_name" placeholder="John Doe" />
+            </div>
+            <div>
+              <label>Email</label>
+              <input id="ship_email" type="email" placeholder="john@example.com" />
+            </div>
+            <div>
+              <label>Phone</label>
+              <input id="ship_phone" placeholder="+1 555 123 4567" />
+            </div>
+            <div>
+              <label>Country</label>
+              <input id="ship_country" placeholder="USA" />
+            </div>
+            <div>
+              <label>City</label>
+              <input id="ship_city" placeholder="Houston" />
+            </div>
+            <div>
+              <label>State/Province</label>
+              <input id="ship_state" placeholder="TX" />
+            </div>
+            <div>
+              <label>Postal/ZIP</label>
+              <input id="ship_zip" placeholder="77084" />
+            </div>
+            <div>
+              <label>Address</label>
+              <input id="ship_address" placeholder="1661 W Little York Rd" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:1rem;">
+          <h2 style="margin:0 0 0.6rem;">Payment</h2>
+          <div class="pay-methods">
+            <label><input type="radio" name="pay" value="card" checked onchange="togglePay('card')" /> Card</label>
+            <label><input type="radio" name="pay" value="paypal" onchange="togglePay('paypal')" /> PayPal</label>
+          </div>
+
+          <div id="payCard" class="pay-card">
+            <div class="form-grid">
+              <div>
+                <label>Cardholder name</label>
+                <input id="cc_name" placeholder="John Doe" />
+              </div>
+              <div>
+                <label>Card number</label>
+                <input id="cc_number" inputmode="numeric" placeholder="4111 1111 1111 1111" />
+              </div>
+              <div>
+                <label>Expiry (MM/YY)</label>
+                <input id="cc_exp" placeholder="12/27" />
+              </div>
+              <div>
+                <label>CVV</label>
+                <input id="cc_cvv" placeholder="123" />
+              </div>
+            </div>
+            <div class="pay-submit">
+              <button class="btn" onclick="payWithCard()">Pay now</button>
+              <span class="notice">Demo only — no real charge. For production, connect a payment gateway.</span>
+            </div>
+            <div id="cardMsg" class="notice"></div>
+          </div>
+
+          <div id="payPaypal" style="display:none;">
+            <div id="paypal-button-container"></div>
+            <div class="notice">PayPal is loaded from server config. Ensure the backend .env has your Live Client ID and Secret.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="card">
+          <h2 style="margin:0 0 0.6rem;">Summary</h2>
+          <div id="totals" class="totals"></div>
+          <div style="margin-top:0.6rem; font-size:0.9rem; color:var(--muted);">Prices in USD.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const currency = 'USD';
+  let orderItems = [];
+  let paypalLoaded = false;
+  const backendBase = (location.origin && location.origin !== 'null' && location.protocol.startsWith('http')) ? location.origin : 'http://localhost:3026';
+
+    function format(n){ return '$' + Number(n || 0).toFixed(2); }
+
+    function loadOrder() {
+      try {
+        const stored = JSON.parse(localStorage.getItem('orderDetails') || '[]');
+        orderItems = Array.isArray(stored) ? stored : [];
+      } catch (_) { orderItems = []; }
+      document.getElementById('orderWrap').style.display = orderItems.length ? '' : 'none';
+      document.getElementById('emptyState').style.display = orderItems.length ? 'none' : '';
+    }
+
+    function renderItems() {
+      const root = document.getElementById('items');
+      root.innerHTML = '';
+      orderItems.forEach((p, idx) => {
+        const img = p.mainImage || p.img || (Array.isArray(p.galleryImages) && p.galleryImages[0]) || '';
+        const thumbs = Array.isArray(p.galleryImages) ? p.galleryImages.slice(0,6) : [];
+        const details = p.details || {};
+        const q = p.quantity && p.quantity > 0 ? p.quantity : 1;
+        // Use sale price when active, but keep original price for strike-through
+  // Allow sale.price provided as string by some pages; coerce to Number
+  const isOnSale = p && p.sale && p.sale.active && Number(p.sale.price) > 0;
+  const unitPrice = isOnSale ? Number(p.sale.price) : Number(p.price || 0);
+        const origUnitPrice = Number(p.price || 0);
+        const longDesc = (p.desc || '').length > 140;
+        const el = document.createElement('div');
+        el.className = 'item';
+        // Price HTML: show struck original price and sale badge when on sale
+        const priceHtml = isOnSale
+          ? `<div class="item-price"><span style="text-decoration:line-through;opacity:0.8;margin-right:0.5rem">${format(origUnitPrice)}</span><span style="background:#ffffff;padding:0.18rem 0.5rem;color:#000;border-radius:0.45rem;font-weight:700">${format(unitPrice)}</span></div>`
+          : `<div class="item-price">${format(unitPrice * q)}</div>`;
+
+        el.innerHTML = `
+          <button class="item-remove" title="Remove" onclick="event.stopPropagation(); removeOrderItem(${idx})">&times;</button>
+          ${img ? `<img class="main" src="${img}" alt="${p.title||p.name||'Product'}" loading="lazy" decoding="async">` : '<div></div>'}
+          <div>
+            <div class="item-title">${p.title || p.name || 'Untitled'} ${
+              p.album ? (() => {
+                // Normalize album URL to include .html when appropriate and avoid overwriting existing query params
+                let albumRaw = String(p.album || '');
+                // If it's not an absolute URL and doesn't already look like a .html file, append .html
+                if (!/^(https?:)?\/\//i.test(albumRaw) && !/\.html(?:$|[?#])/i.test(albumRaw)) {
+                  albumRaw = albumRaw.endsWith('/') ? (albumRaw + 'index.html') : (albumRaw + '.html');
+                }
+                const href = albumRaw + (albumRaw.includes('?') ? '&' : '?') + 'from=order';
+                // Open in same tab so history back goes to order page, and ensure from=order is preserved
+                return `<span class="item-meta">&nbsp;· <a href="${href}" style="color:#89b4ff;">View</a></span>`;
+              })() : ''
+            }</div>
+            ${p.desc ? ('<div class="item-desc" id="desc-'+idx+'">'+(p.desc||'')+'</div>') : ''}
+            ${p.desc && longDesc ? ('<button class="show-more-btn" onclick="toggleDesc('+idx+')">Read more</button>') : ''}
+            ${(details.blade||details.handle||details.length||details.weight||details.features) ? `
+              <div class="item-details">
+                ${details.blade ? `<div><b>Blade:</b> ${details.blade}</div>`:''}
+                ${details.handle ? `<div><b>Handle:</b> ${details.handle}</div>`:''}
+                ${details.length ? `<div><b>Length:</b> ${details.length}</div>`:''}
+                ${details.weight ? `<div><b>Weight:</b> ${details.weight}</div>`:''}
+                ${details.features ? `<div><b>Features:</b> ${details.features}</div>`:''}
+              </div>` : ''}
+            ${thumbs.length ? `<div class="thumbs">${thumbs.map(t=>`<img src="${t}" alt="thumbnail" loading="lazy" decoding="async">`).join('')}</div>`: ''}
+            <div class="item-meta">Quantity: <b>${q}</b></div>
+          </div>
+          ${priceHtml}
+        `;
+        root.appendChild(el);
+      });
+    }
+
+    function computeTotals() {
+      const subtotal = orderItems.reduce((sum, p) => {
+        const q = p.quantity && p.quantity>0 ? p.quantity : 1;
+  const unit = (p && p.sale && p.sale.active && Number(p.sale.price) > 0) ? Number(p.sale.price) : Number(p.price||0);
+        return sum + unit * q;
+      }, 0);
+      const shipping = 0; // Flat/free shipping demo
+      const tax = 0;      // No tax demo
+      const total = subtotal + shipping + tax;
+      return { subtotal, shipping, tax, total };
+    }
+  function renderTotals() {
+      const t = computeTotals();
+      const root = document.getElementById('totals');
+      root.innerHTML = '';
+      const rows = [
+        ['Subtotal', format(t.subtotal)],
+    ['Shipping', shippingLabel(t.shipping)],
+    ['Tax', format(t.tax)],
+      ];
+      rows.forEach(([label, val]) => {
+        const r = document.createElement('div'); r.className = 'totals-row';
+        r.innerHTML = `<div class="label">${label}</div><div class="value">${val}</div>`;
+        root.appendChild(r);
+      });
+      const tr = document.createElement('div'); tr.className = 'totals-row total';
+      tr.innerHTML = `<div class="label">Total</div><div class="value" id="grandTotal">${format(t.total)}</div>`;
+      root.appendChild(tr);
+    }
+
+    function shippingLabel(s) { return s === 0 ? 'Free' : format(s); }
+
+    function togglePay(which) {
+      document.getElementById('payCard').style.display = which === 'card' ? '' : 'none';
+      document.getElementById('payPaypal').style.display = which === 'paypal' ? '' : 'none';
+      if (which === 'paypal' && !paypalLoaded) {
+        ensurePayPalButtons();
+      }
+    }
+
+    function toggleDesc(i) {
+      const el = document.getElementById('desc-' + i);
+      if (!el) return;
+      el.classList.toggle('expanded');
+      // Switch button label
+      const btn = el.nextElementSibling;
+      if (btn && btn.classList.contains('show-more-btn')) {
+        btn.textContent = el.classList.contains('expanded') ? 'Show less' : 'Read more';
+      }
+    }
+
+    function getShippingData() {
+      return {
+        name: document.getElementById('ship_name').value.trim(),
+        email: document.getElementById('ship_email').value.trim(),
+        phone: document.getElementById('ship_phone').value.trim(),
+        country: document.getElementById('ship_country').value.trim(),
+        city: document.getElementById('ship_city').value.trim(),
+        state: document.getElementById('ship_state').value.trim(),
+        zip: document.getElementById('ship_zip').value.trim(),
+        address: document.getElementById('ship_address').value.trim(),
+      };
+    }
+
+    function saveShippingData() {
+      try { localStorage.setItem('shippingInfo', JSON.stringify(getShippingData())); } catch (_) {}
+    }
+
+    function loadShippingData() {
+      try {
+        const s = JSON.parse(localStorage.getItem('shippingInfo')||'null');
+        if (!s) return;
+        if (s.name) document.getElementById('ship_name').value = s.name;
+        if (s.email) document.getElementById('ship_email').value = s.email;
+        if (s.phone) document.getElementById('ship_phone').value = s.phone;
+        if (s.country) document.getElementById('ship_country').value = s.country;
+        if (s.city) document.getElementById('ship_city').value = s.city;
+        if (s.state) document.getElementById('ship_state').value = s.state;
+        if (s.zip) document.getElementById('ship_zip').value = s.zip;
+        if (s.address) document.getElementById('ship_address').value = s.address;
+      } catch(_) {}
+    }
+
+    function validateShipping() {
+      const req = ['ship_name','ship_email','ship_phone','ship_country','ship_city','ship_state','ship_zip','ship_address'];
+      for (const id of req) { if (!document.getElementById(id).value.trim()) return false; }
+      return true;
+    }
+
+    function payWithCard() {
+      const msg = document.getElementById('cardMsg');
+      msg.textContent = '';
+      if (!validateShipping()) { msg.textContent = 'Please fill shipping details.'; msg.className = 'notice err'; return; }
+      if (!document.getElementById('cc_name').value.trim() || !document.getElementById('cc_number').value.trim() || !document.getElementById('cc_exp').value.trim() || !document.getElementById('cc_cvv').value.trim()) {
+        msg.textContent = 'Please fill all card fields.'; msg.className = 'notice err'; return;
+      }
+      saveShippingData();
+      // Demo success
+      onPaymentSuccess({ method: 'card', id: 'DEMO-' + Date.now() });
+    }
+
+    function removeOrderItem(i) {
+      if (i < 0 || i >= orderItems.length) return;
+      orderItems.splice(i, 1);
+      if (orderItems.length) {
+        localStorage.setItem('orderDetails', JSON.stringify(orderItems));
+        renderItems();
+        renderTotals();
+      } else {
+        localStorage.removeItem('orderDetails');
+        document.getElementById('orderWrap').style.display = 'none';
+        document.getElementById('emptyState').style.display = '';
+      }
+    }
+
+    function onPaymentSuccess(info) {
+      // Persist order record (optional): in demo we just clear and show success
+      localStorage.removeItem('orderDetails');
+      const wrap = document.getElementById('orderWrap');
+      wrap.innerHTML = `<div class="card" style="text-align:center;">
+        <h2 class="ok">Payment successful</h2>
+        <div class="notice">Thank you. Your payment (${info.method}) was confirmed.</div>
+        <div style="margin-top:0.8rem;">
+          <a class="btn" href="index.html">Back to Home</a>
+        </div>
+      </div>`;
+    }
+
+    // Load PayPal SDK dynamically so we can pass total amount after render
+    function ensurePayPalButtons() {
+      const container = document.getElementById('paypal-button-container');
+      if (!container) return;
+      if (paypalLoaded) { renderPayPal(); return; }
+      // Load PayPal SDK with live client-id from backend
+      fetch(backendBase + '/config/paypal').then(r => r.json()).then(cfg => {
+        if (!cfg.clientId) { alert('PayPal not configured on server.'); return; }
+        const script = document.createElement('script');
+        script.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(cfg.clientId) + '&currency=' + (cfg.currency||'USD') + '&intent=' + (cfg.intent||'CAPTURE');
+        script.onload = renderPayPal;
+        document.body.appendChild(script);
+      }).catch(() => alert('Failed to load PayPal config.'));
+    }
+
+    function renderPayPal() {
+      if (!window.paypal) return;
+      paypalLoaded = true;
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+        createOrder: async () => {
+          if (!validateShipping()) { alert('Please fill shipping details first.'); return; }
+          saveShippingData();
+          const t = computeTotals();
+          const shipping = getShippingData();
+          const items = orderItems.map(p => ({ title: p.title||p.name||'Item', price: Number(p.price)||0, quantity: (p.quantity && p.quantity>0)? p.quantity:1 }));
+          const resp = await fetch(backendBase + '/api/orders', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items, shipping })
+          });
+          if (!resp.ok) { const txt = await resp.text(); throw new Error(txt||'Order creation failed'); }
+          const data = await resp.json();
+          return data.id;
+        },
+        onApprove: async (data) => {
+          const resp = await fetch(backendBase + '/api/orders/' + encodeURIComponent(data.orderID) + '/capture', { method: 'POST' });
+          if (!resp.ok) { const txt = await resp.text(); throw new Error(txt||'Capture failed'); }
+          const details = await resp.json();
+          onPaymentSuccess({ method: 'paypal', id: details?.id || data.orderID });
+        },
+        onError: (err) => { console.error(err); alert('PayPal error. Please try another method.'); }
+      }).render('#paypal-button-container');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadOrder();
+      if (!orderItems.length) return; // nothing to do
+      loadShippingData();
+      renderItems();
+      renderTotals();
+      // Defer PayPal SDK until user selects PayPal
+    });
+  </script>
+</body>
+</html>

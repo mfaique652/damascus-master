@@ -10,21 +10,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   
   <style>
-    /* === ROOT VARIABLES === */
-    :root {
-      --primary: #ffb347;
-      --primary-dark: #ff8800;
-      --accent: #00e6d0;
-      --bg: #181a20;
-      --bg-light: #23262f;
-      --text: #f5f6fa;
-      --text-muted: #b0b3b8;
-      --card: #23262f;
-      --shadow: 0 0.25rem 2rem 0 rgba(0,0,0,0.18);
-      --radius: 1.2rem;
-      --header-h: 64px;
-      --container-max: min(1200px, 94vw);
-    }
+/* === ROOT VARIABLES === */
+    /* removed inline :root by strip_inline_theme.cjs */
 
     /* === GLOBAL RESET === */
     *, *::before, *::after {
@@ -1651,7 +1638,334 @@
         padding: 1.2rem 2vw;
       }
     }
-  </style>
+
+/* merged: separator */
+
+.header-right { position: relative; }
+    .account-bubble {
+      position: absolute;
+      top: 3.5rem;
+      right: 0;
+      background: #23262f;
+      color: #ffe066;
+      border-radius: 0.8rem;
+      box-shadow: 0 4px 24px #0007;
+      min-width: 170px;
+      padding: 1rem 1.2rem 1rem 1.2rem;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-family: 'Montserrat', Arial, sans-serif;
+      animation: fadeInBubble 0.18s;
+    }
+    @keyframes fadeInBubble {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .account-bubble-btn {
+      background: linear-gradient(90deg, #ffffff 60%, #ffffff 100%);
+      color: #23262f;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 0.5em 1.2em;
+      margin-top: 0.2em;
+      margin-bottom: 0.2em;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 2px 8px #0002;
+      transition: background 0.2s, color 0.2s;
+      text-align: left;
+    }
+    .account-bubble-btn:hover {
+      background: linear-gradient(90deg, #b3b3b3 60%, #a5a5a5 100%);
+      color: #181a20;
+    }
+
+/* merged: separator */
+
+.top-sellers-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .top-seller-product {
+    background: #fff !important;
+    color: #111 !important;
+    border-radius: 1rem;
+    box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.18);
+    padding: 0.8rem 0.8rem 1rem 0.8rem;
+    min-width: 160px;
+    max-width: 220px;
+    flex: 1 1 18%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+    /* fixed card height to keep all cards uniform */
+    height: 300px;
+    box-sizing: border-box;
+    justify-content: flex-start;
+  overflow: hidden; /* keep ribbon inside card and prevent overflow */
+  }
+  .top-seller-product:hover {
+    background: #282b36;
+    box-shadow: 0 0.5rem 1.5rem rgba(255,204,0,0.13);
+    transform: translateY(-0.2rem) scale(1.04);
+  }
+  .product-card-inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-start;
+  }
+  .product-img-wrap {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    background: linear-gradient(180deg,#ffffff,#f7f7f7); /* light neutral background to hide dark edges */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  overflow: hidden; /* keep image contained */
+  position: relative;
+    box-shadow: 0 6px 18px rgba(16,24,32,0.06);
+    border: 1px solid #eee;
+    margin-bottom: 0.7rem;
+  }
+  .product-img-wrap img {
+   display: block;
+   /* Use height-based sizing and contain so tall (portrait) images are shown fully
+     while preserving the thumbnail box size. This avoids cropping. */
+   width: auto;
+   height: 100%;
+   max-width: 100%;
+   max-height: 100%;
+   object-fit: contain;
+   object-position: center center;
+   border-radius: 8px;
+   background-color: #fff; /* prevents dark bleed-through if image has transparency */
+  }
+  /* wishlist heart inside top-seller cards */
+  .top-seller-product .wishlist-heart {
+  position: absolute;
+  top: 8px;
+  right: 8px; /* stay inside card so overflow:hidden won't clip it */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+  z-index: 40;
+  }
+  .top-seller-product .wishlist-heart svg { display:block; }
+
+  /* Sale badge and sale price styling for top sellers */
+  /* Diagonal sale ribbon (corner) */
+  /* ribbon anchored to the image wrapper so it can peek slightly outside the picture */
+  .product-img-wrap .top-seller-sale-ribbon {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    overflow: hidden; /* clip background so text sits 'on' ribbon */
+    top: -12px; /* slightly outside the image */
+    left: -12px; /* slightly outside the image */
+    pointer-events: none;
+    z-index: 70; /* above image but below heart if needed */
+    border-radius: 6px;
+    transform: translateZ(0);
+  }
+  .product-img-wrap .top-seller-sale-ribbon::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 110px;
+    height: 32px;
+    /* white ribbon with subtle shade for visibility */
+    background: linear-gradient(180deg,#ffffff,#f3f4f6);
+    /* move slightly less so the ribbon aligns under the text */
+    transform: rotate(-45deg) translate(-10px, -6px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.06);
+    z-index: 1;
+  }
+  .product-img-wrap .top-seller-sale-ribbon .ribbon-text {
+    position: absolute;
+    left: 50%;
+    top: 46%; /* center text on the smaller stripe */
+    transform: translate(-50%, -56%) rotate(-45deg);
+    transform-origin: center center;
+    color: #000; /* black text as requested */
+    font-weight: 800;
+    font-size: 0.82rem;
+    line-height: 1;
+    width: 120px;
+    text-align: center;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    z-index: 2; /* place above the ::before background */
+    /* subtle text shadow to improve legibility on bright backgrounds */
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  /* Filled heart state */
+  .top-seller-product .wishlist-heart.filled { background: #ff4d6d; }
+  .top-seller-product .wishlist-heart.filled svg path { fill: #fff; stroke: #fff; }
+
+  /* Make sale price white bg with black text (inline price containers already use this style for sale) */
+  .top-seller-product .product-info .sale-price {
+    background: #fff;
+    color: #000;
+    padding: 0.15em 0.5em;
+    border-radius: 0.35em;
+    font-weight: 800;
+  }
+  .product-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+  }
+  .product-price {
+    color: #00ff99;
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin-left: 0.2rem;
+  }
+  .wishlist-btn {
+    position: relative;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    z-index: 2;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: filter 0.2s;
+  }
+  .wishlist-btn svg {
+    display: block;
+    pointer-events: none;
+  }
+  .product-title {
+    color: #ffcc00;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0.5rem;
+    width: 100%;
+    word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  /* standard property for newer browsers */
+  line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 900px) {
+    .product-img-wrap {
+      width: 70px;
+      height: 70px;
+    }
+    .top-seller-product {
+      min-width: 120px;
+      max-width: 150px;
+      padding: 0.7rem 0.3rem 0.5rem 0.3rem;
+      height: 240px;
+    }
+  }
+  @media (max-width: 600px) {
+    /* Ensure exactly 2 per row */
+    .top-sellers-row { justify-content: center; gap: 0.6rem; }
+    .top-seller-product {
+      flex: 0 1 calc(50% - 0.6rem);
+      max-width: calc(50% - 0.6rem);
+      min-width: calc(50% - 0.6rem);
+      margin-bottom: 0.7rem;
+      height: auto; /* allow taller cards on very small screens */
+    }
+    /* Center the last (5th) card on its own row */
+    .top-sellers-row .top-seller-product:last-child { margin-left: auto; margin-right: auto; }
+    .product-img-wrap {
+      width: 50vw;
+      height: 50vw;
+      max-width: 110px;
+      max-height: 110px;
+    }
+  }
+
+/* merged: separator */
+
+/* Help form responsive styles (use rem units) */
+    .help-form {
+      gap: 0.9rem;
+      width: 100%;
+      max-width: 100%;
+      grid-template-columns: 1fr 1fr;
+      box-sizing: border-box;
+    }
+    .help-form .help-input {
+      padding: 0.55rem;
+      border: 0.0625rem solid #ddd;
+      border-radius: 0.5rem;
+      background: #fff;
+      font-size: 0.95rem;
+      width: 100%;
+      box-sizing: border-box;
+      display: block;
+    }
+    .help-form select.help-input,
+    .help-form textarea.help-input,
+    .help-form input.help-input {
+      width: 100%;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    /* .full spans both columns by default */
+    .help-form .full { grid-column: 1 / -1; }
+  .help-form .help-submit-btn {
+      background: linear-gradient(90deg,#ffb347,#ff8800);
+      color: #181a20;
+      border: 0;
+      padding: 0.55rem 0.9rem;
+      border-radius: 0.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    /* Use rem breakpoint instead of pixels: 44rem ~ 704px */
+    @media (max-width:44rem) {
+      .help-form { grid-template-columns: 1fr !important; }
+      .help-form .full { grid-column: 1 / -1 !important; }
+  #helpContact .container { padding: 0 0.5rem; }
+      /* Stack the two columns so the right info panel moves under the form */
+      #helpContact .container { flex-direction: column; align-items: stretch; }
+      #helpContact .container > div { flex: 1 1 100% !important; min-width: auto !important; }
+  #helpContact .container > div:last-child { order: 2; margin-top: 1rem; }
+      /* Ensure submit button stretches nicely on small screens if desired */
+      .help-form .help-submit-btn { width: auto; }
+    }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -2028,50 +2342,7 @@
   });
   </script>
   </header>
-  <style>
-    .header-right { position: relative; }
-    .account-bubble {
-      position: absolute;
-      top: 3.5rem;
-      right: 0;
-      background: #23262f;
-      color: #ffe066;
-      border-radius: 0.8rem;
-      box-shadow: 0 4px 24px #0007;
-      min-width: 170px;
-      padding: 1rem 1.2rem 1rem 1.2rem;
-      z-index: 3000;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      font-family: 'Montserrat', Arial, sans-serif;
-      animation: fadeInBubble 0.18s;
-    }
-    @keyframes fadeInBubble {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .account-bubble-btn {
-      background: linear-gradient(90deg, #ffffff 60%, #ffffff 100%);
-      color: #23262f;
-      border: none;
-      border-radius: 0.5rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      padding: 0.5em 1.2em;
-      margin-top: 0.2em;
-      margin-bottom: 0.2em;
-      cursor: pointer;
-      width: 100%;
-      box-shadow: 0 2px 8px #0002;
-      transition: background 0.2s, color 0.2s;
-      text-align: left;
-    }
-    .account-bubble-btn:hover {
-      background: linear-gradient(90deg, #b3b3b3 60%, #a5a5a5 100%);
-      color: #181a20;
-    }
-  </style>
+  
   <script>
     // Simple login state using localStorage for demo
     function isLoggedIn() {
@@ -2381,234 +2652,7 @@
   }
   document.addEventListener('DOMContentLoaded', fetchTopSellers);
   </script>
-  <style>
-  .top-sellers-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 1.2rem;
-    flex-wrap: wrap;
-  }
-  .top-seller-product {
-    background: #fff !important;
-    color: #111 !important;
-    border-radius: 1rem;
-    box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.18);
-    padding: 0.8rem 0.8rem 1rem 0.8rem;
-    min-width: 160px;
-    max-width: 220px;
-    flex: 1 1 18%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
-    /* fixed card height to keep all cards uniform */
-    height: 300px;
-    box-sizing: border-box;
-    justify-content: flex-start;
-  overflow: hidden; /* keep ribbon inside card and prevent overflow */
-  }
-  .top-seller-product:hover {
-    background: #282b36;
-    box-shadow: 0 0.5rem 1.5rem rgba(255,204,0,0.13);
-    transform: translateY(-0.2rem) scale(1.04);
-  }
-  .product-card-inner {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    justify-content: flex-start;
-  }
-  .product-img-wrap {
-    width: 140px;
-    height: 140px;
-    border-radius: 12px;
-    background: linear-gradient(180deg,#ffffff,#f7f7f7); /* light neutral background to hide dark edges */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  overflow: hidden; /* keep image contained */
-  position: relative;
-    box-shadow: 0 6px 18px rgba(16,24,32,0.06);
-    border: 1px solid #eee;
-    margin-bottom: 0.7rem;
-  }
-  .product-img-wrap img {
-   display: block;
-   /* Use height-based sizing and contain so tall (portrait) images are shown fully
-     while preserving the thumbnail box size. This avoids cropping. */
-   width: auto;
-   height: 100%;
-   max-width: 100%;
-   max-height: 100%;
-   object-fit: contain;
-   object-position: center center;
-   border-radius: 8px;
-   background-color: #fff; /* prevents dark bleed-through if image has transparency */
-  }
-  /* wishlist heart inside top-seller cards */
-  .top-seller-product .wishlist-heart {
-  position: absolute;
-  top: 8px;
-  right: 8px; /* stay inside card so overflow:hidden won't clip it */
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-  border: 1px solid rgba(0,0,0,0.06);
-  cursor: pointer;
-  z-index: 40;
-  }
-  .top-seller-product .wishlist-heart svg { display:block; }
-
-  /* Sale badge and sale price styling for top sellers */
-  /* Diagonal sale ribbon (corner) */
-  /* ribbon anchored to the image wrapper so it can peek slightly outside the picture */
-  .product-img-wrap .top-seller-sale-ribbon {
-    position: absolute;
-    width: 52px;
-    height: 52px;
-    overflow: hidden; /* clip background so text sits 'on' ribbon */
-    top: -12px; /* slightly outside the image */
-    left: -12px; /* slightly outside the image */
-    pointer-events: none;
-    z-index: 70; /* above image but below heart if needed */
-    border-radius: 6px;
-    transform: translateZ(0);
-  }
-  .product-img-wrap .top-seller-sale-ribbon::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 110px;
-    height: 32px;
-    /* white ribbon with subtle shade for visibility */
-    background: linear-gradient(180deg,#ffffff,#f3f4f6);
-    /* move slightly less so the ribbon aligns under the text */
-    transform: rotate(-45deg) translate(-10px, -6px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.6);
-    border: 1px solid rgba(0,0,0,0.06);
-    z-index: 1;
-  }
-  .product-img-wrap .top-seller-sale-ribbon .ribbon-text {
-    position: absolute;
-    left: 50%;
-    top: 46%; /* center text on the smaller stripe */
-    transform: translate(-50%, -56%) rotate(-45deg);
-    transform-origin: center center;
-    color: #000; /* black text as requested */
-    font-weight: 800;
-    font-size: 0.82rem;
-    line-height: 1;
-    width: 120px;
-    text-align: center;
-    letter-spacing: 0.02em;
-    pointer-events: none;
-    z-index: 2; /* place above the ::before background */
-    /* subtle text shadow to improve legibility on bright backgrounds */
-    text-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 1px 4px rgba(0,0,0,0.06);
-  }
-
-  /* Filled heart state */
-  .top-seller-product .wishlist-heart.filled { background: #ff4d6d; }
-  .top-seller-product .wishlist-heart.filled svg path { fill: #fff; stroke: #fff; }
-
-  /* Make sale price white bg with black text (inline price containers already use this style for sale) */
-  .top-seller-product .product-info .sale-price {
-    background: #fff;
-    color: #000;
-    padding: 0.15em 0.5em;
-    border-radius: 0.35em;
-    font-weight: 800;
-  }
-  .product-info {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.3rem;
-  }
-  .product-price {
-    color: #00ff99;
-    font-size: 1.08rem;
-    font-weight: 700;
-    margin-left: 0.2rem;
-  }
-  .wishlist-btn {
-    position: relative;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    z-index: 2;
-    background: none;
-    border: none;
-    padding: 0;
-    transition: filter 0.2s;
-  }
-  .wishlist-btn svg {
-    display: block;
-    pointer-events: none;
-  }
-  .product-title {
-    color: #ffcc00;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-align: center;
-    margin-top: 0.5rem;
-    width: 100%;
-    word-break: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  /* standard property for newer browsers */
-  line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  @media (max-width: 900px) {
-    .product-img-wrap {
-      width: 70px;
-      height: 70px;
-    }
-    .top-seller-product {
-      min-width: 120px;
-      max-width: 150px;
-      padding: 0.7rem 0.3rem 0.5rem 0.3rem;
-      height: 240px;
-    }
-  }
-  @media (max-width: 600px) {
-    /* Ensure exactly 2 per row */
-    .top-sellers-row { justify-content: center; gap: 0.6rem; }
-    .top-seller-product {
-      flex: 0 1 calc(50% - 0.6rem);
-      max-width: calc(50% - 0.6rem);
-      min-width: calc(50% - 0.6rem);
-      margin-bottom: 0.7rem;
-      height: auto; /* allow taller cards on very small screens */
-    }
-    /* Center the last (5th) card on its own row */
-    .top-sellers-row .top-seller-product:last-child { margin-left: auto; margin-right: auto; }
-    .product-img-wrap {
-      width: 50vw;
-      height: 50vw;
-      max-width: 110px;
-      max-height: 110px;
-    }
-  }
-  </style>
+  
   </section>
 
   <section class="section kitchen-knives section--alt card-like" id="Kitchen knives">
@@ -2718,58 +2762,7 @@
     <button class="order-btn" onclick="placeOrder()" style="opacity: 0.6; cursor: not-allowed;" disabled="">Place Order</button>
   </div>
   <!-- Help / quick contact section inserted by script: collects name, email, mobile (optional), country, message -->
-  <style>
-    /* Help form responsive styles (use rem units) */
-    .help-form {
-      gap: 0.9rem;
-      width: 100%;
-      max-width: 100%;
-      grid-template-columns: 1fr 1fr;
-      box-sizing: border-box;
-    }
-    .help-form .help-input {
-      padding: 0.55rem;
-      border: 0.0625rem solid #ddd;
-      border-radius: 0.5rem;
-      background: #fff;
-      font-size: 0.95rem;
-      width: 100%;
-      box-sizing: border-box;
-      display: block;
-    }
-    .help-form select.help-input,
-    .help-form textarea.help-input,
-    .help-form input.help-input {
-      width: 100%;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
-    /* .full spans both columns by default */
-    .help-form .full { grid-column: 1 / -1; }
-  .help-form .help-submit-btn {
-      background: linear-gradient(90deg,#ffb347,#ff8800);
-      color: #181a20;
-      border: 0;
-      padding: 0.55rem 0.9rem;
-      border-radius: 0.5rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-    /* Use rem breakpoint instead of pixels: 44rem ~ 704px */
-    @media (max-width:44rem) {
-      .help-form { grid-template-columns: 1fr !important; }
-      .help-form .full { grid-column: 1 / -1 !important; }
-  #helpContact .container { padding: 0 0.5rem; }
-      /* Stack the two columns so the right info panel moves under the form */
-      #helpContact .container { flex-direction: column; align-items: stretch; }
-      #helpContact .container > div { flex: 1 1 100% !important; min-width: auto !important; }
-  #helpContact .container > div:last-child { order: 2; margin-top: 1rem; }
-      /* Ensure submit button stretches nicely on small screens if desired */
-      .help-form .help-submit-btn { width: auto; }
-    }
-    </style>
+  
   <section id="helpContact" class="section" style="background:linear-gradient(180deg,#fff,#f9fafb);padding:1.25rem 1rem;border-top:0.0625rem solid #eee;margin-top:1.5rem;">
     <div class="container" style="max-width:var(--container-max);display:flex;gap:0.75rem;align-items:flex-start;flex-wrap:wrap;">
       <div style="flex:1 1 22.5rem;min-width:15rem;">

@@ -84,3 +84,28 @@ body{ background: var(--bg-page); color: var(--primary); }
 
 @media (min-width:64rem){ .section{ padding: calc(var(--space-5) + 1rem) 2rem; }
 }
+
+/* Sale ribbon / corner badge used across product cards and album pages
+   Centralized rule: keep the ribbon hidden by default so JS or component
+   code can reveal it (avoids inline overrides in templates). */
+.sale-ribbon {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  transform: none;
+  min-width: 48px;
+  padding: 6px 8px;
+  background: linear-gradient(90deg,#ff5a5a,#ff8a5a);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-align: center;
+  border-radius: 0.45rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+  z-index: 9999;
+  display: inline-block !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transition: opacity 150ms ease, visibility 150ms ease;
+}
+
