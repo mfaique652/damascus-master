@@ -94,7 +94,7 @@
       "name": "Faiq Sajjad",
       "username": "faiqsajjad652",
       "role": "admin",
-      "password": "$2a$10$0TFSK3Ik8G9j.GP64N5QAe6tGBv9w0Ebz0bjV/bEJn538i0YcW2zy",
+      "password": "$2a$10$jjIypnj9Z73CJ1HTvUKzeOQ4Hj9dgwlTax4pZc5CKdCS5i3gjtDVy",
       "phone": "",
       "address": "",
       "city": "",
@@ -124,8 +124,8 @@
       "totalSpent": 0,
       "memberSince": 2025,
       "createdAt": "2025-08-17T05:57:12.065Z",
-      "updatedAt": "2025-08-23T13:50:55.773Z",
-      "lastLogin": "2025-08-23T13:42:27.782Z",
+      "updatedAt": "2025-08-23T14:36:19.053Z",
+      "lastLogin": "2025-08-23T16:42:30.091Z",
       "knownIps": [
         "127.0.0.1"
       ]
@@ -324,12 +324,29 @@
         "127.0.0.1"
       ],
       "orders": [],
-      "wishlist": [],
+      "wishlist": [
+        {
+          "id": "5e670695-92f5-4dd7-95f9-2588b9507da5",
+          "title": "Hand Forged Damascus Steel 5 Pcs Rosewood Handle Chef Knife Set",
+          "price": 250,
+          "img": "/uploads/1755371443467-1.png",
+          "album": "hand_forged_damascus_steel_5_pcs_rosewood_handle_chef_knife_set.html?from=gallery&cat=kitchen-knives",
+          "addedAt": "2025-08-23T17:01:31.735Z"
+        },
+        {
+          "id": "8b17d2d1-112c-4c33-bea4-c2b4ca9247cd",
+          "title": "HUNTING BOWIE KNIFE Gift for men",
+          "price": 180,
+          "img": "uploads/1755373694646-HUNTING_BOWIE_KNIFE_Gift_for_men__Handmade_Chef_knives__Kitchen_knives__Chef_knives__Anniversar__2_.webp",
+          "album": "hunting_bowie_knife_gift_for_men.html",
+          "addedAt": "2025-08-23T17:03:43.156Z"
+        }
+      ],
       "totalSpent": 0,
       "memberSince": 2025,
       "createdAt": "2025-08-20T19:34:14.607Z",
-      "updatedAt": "2025-08-23T13:43:39.771Z",
-      "lastLogin": "2025-08-23T13:41:51.595Z"
+      "updatedAt": "2025-08-23T17:03:43.156Z",
+      "lastLogin": "2025-08-23T17:00:23.451Z"
     }
   ],
   "products": [
@@ -811,6 +828,19 @@
       "message": "hy bro how are you ..............",
       "newsletter": false,
       "submittedAt": "2025-08-20T03:45:14.493Z",
+      "status": "new",
+      "priority": "normal"
+    },
+    {
+      "id": "0cfc5396-c92c-4996-8458-8d9fbed9fd43",
+      "name": "Ali Sajjad",
+      "email": "alisajjad1719@gmail.com",
+      "country": "Other",
+      "phone": "N/A",
+      "inquiryType": "general",
+      "message": "yeah bruh how are you.........",
+      "newsletter": false,
+      "submittedAt": "2025-08-23T17:05:41.385Z",
       "status": "new",
       "priority": "normal"
     }
