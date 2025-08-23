@@ -161,7 +161,9 @@
     desc: (function(){ try{ return JSON.parse('{{JS_DESC}}'); }catch(e){ try{ return '{{JS_DESC}}'; }catch(e2){ return ''; } } })(),
     price: (function(){ try{ return JSON.parse('{{JS_PRICE}}'); }catch(e){ return '{{JS_PRICE}}'; } })(),
     mainImage: (function(){ try{ return JSON.parse('{{JS_MAIN_IMAGE}}'); }catch(e){ return '{{JS_MAIN_IMAGE}}'; } })(),
-    imagesHtml: (function(){ try{ return JSON.parse('{{JS_IMAGES}}'); }catch(e){ try{ return '{{JS_IMAGES}}'; }catch(e2){ return ''; } } })(),
+  // Avoid embedding raw HTML into inline JS which can break when HTML contains
+  // unescaped quotes. Read the thumbnail markup from the DOM at runtime instead.
+  imagesHtml: (function(){ try{ var el = document.getElementById('albumThumbs'); return (el && el.innerHTML) ? el.innerHTML : ''; }catch(e){ return ''; } })(),
     heartId: (function(){ try{ return JSON.parse('{{JS_HEART_ID}}'); }catch(e){ return '{{JS_HEART_ID}}'; } })(),
     detailsJson: (function(){ try{ return JSON.parse('{{DETAILS_JSON}}'); }catch(e){ return {}; } })(),
     albumFilename: (function(){ try{ return JSON.parse('{{JS_ALBUM}}'); }catch(e){ return '{{JS_ALBUM}}'; } })(),
@@ -177,6 +179,41 @@
 <script src="site.js"></script>
 
 <script>
+// Conservative sale renderer: computes percent and displays the ribbon if sale active.
+(function(){
+  function renderSale(){
+    try{
+      var ph = window.__ALBUM_PLACEHOLDERS || {};
+      var sale = ph.sale || null;
+      if(!sale || !sale.active) return;
+      var pctEl = document.getElementById('saleRibbonPct');
+      var priceEl = document.getElementById('saleRibbonPrice');
+      var unitEl = document.getElementById('unitPrice');
+      var ribbon = document.getElementById('saleRibbon');
+      var prev = Number(sale.prevPrice || 0);
+      var now = Number(sale.price || sale.price === 0 ? sale.price : (ph.price || 0));
+      if(isNaN(prev) || isNaN(now) || prev<=0 || now<=0){
+        // fallback: show only "SALE" without percent
+        if(pctEl) pctEl.textContent = 'SALE';
+      } else {
+        var pct = Math.round((1 - (now / prev)) * 100);
+        if(pctEl) pctEl.textContent = pct > 0 ? ('-' + pct + '%') : 'SALE';
+        if(priceEl) priceEl.textContent = '$' + Number(now).toFixed(2);
+        // keep a visible unit price if present
+        if(unitEl && unitEl.textContent.indexOf('$')===-1){ unitEl.textContent = '$' + Number(now).toFixed(2); }
+      }
+      if(ribbon){
+        ribbon.style.visibility = 'visible';
+        ribbon.style.opacity = '1';
+        ribbon.style.zIndex = 9999;
+      }
+    }catch(e){ /* noop */ }
+  }
+  if(document.readyState==='complete' || document.readyState==='interactive') setTimeout(renderSale,10); else document.addEventListener('DOMContentLoaded', renderSale);
+  // expose for debugging or manual re-render
+  window.__renderAlbumSale = renderSale;
+})();
+
   // Diagnostic observer: log attribute/style changes to #saleRibbon so we can detect later scripts hiding it
   (function(){ try{
     var el = document.getElementById && document.getElementById('saleRibbon');
